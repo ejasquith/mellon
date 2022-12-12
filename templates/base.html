@@ -64,7 +64,12 @@
 
         <!-- Footer -->
         <footer class="footer mt-auto py-3 bg-dark fixed-bottom">
-            <p class="m-0 text-center text-white">&copy; Emily Asquith 2022</p>
+            <p class="m-0 text-center text-white">&copy; Emily Asquith <span id="copyright">
+                    <script>
+                        document.getElementById('copyright').appendChild(document.createTextNode(new Date()
+                        .getFullYear()))
+                    </script>
+                </span></p>
             <p class="m-0 text-center text-white">
                 <a href="https://github.com/ejasquith"><i class="fa-brands fa-github"></i></a>
                 <a href="https://www.linkedin.com/in/ejasquith/"><i class="fa-brands fa-linkedin-in"></i></a>
