@@ -6,8 +6,8 @@
         <!--Post Display-->
         {% if user.is_authenticated %}
             {% for post in post_list %}
-                <div class="col-md-8">
-                    <div class="card-body mt-4">
+                <div class="col-md-6 offset-md-3 mt-4 card">
+                    <div class="card-body">
                         <div class="author">{{ post.author }}</div>
                         <div class="body">{{ post.body }}</div>
                     </div>
