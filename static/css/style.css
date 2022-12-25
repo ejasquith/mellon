@@ -24,3 +24,9 @@
     line-height: 75px;
     vertical-align: middle;
 }
+
+#create-post-form textarea {
+    padding: 10px;
+    width: 100%;
+    resize: none;
+}
