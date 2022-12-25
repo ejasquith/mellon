@@ -1,0 +1,22 @@
+.post-btn {
+    background-color: blueviolet;
+    color: white;
+}
+
+#create-post-btn {
+    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+    /* used to center text */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    position: absolute;
+    bottom: 150px;
+    right:25px;
+}
+#create-post-btn p {
+    line-height: 75px;
+    vertical-align: middle;
+}
