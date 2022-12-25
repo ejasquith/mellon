@@ -5,7 +5,7 @@
     <div class="row">
         <!--Post Display-->
         {% if user.is_authenticated %}
-            {% for post in post_list %}
+            {% for post in post_list|dictsortreversed:"created_on" %}
                 <div class="col-md-6 offset-md-3 mt-4 card">
                     <div class="card-body">
                         <div class="author">{{ post.author }}</div>

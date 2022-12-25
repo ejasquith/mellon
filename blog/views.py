@@ -11,8 +11,7 @@ from accounts.models import CustomUser as User
 
 class PostList(generic.ListView):
     model = Post
-    # Gets the most recent post from each user
-    queryset = Post.objects.filter(
-        created_on__lte=timezone.now()
-    ).order_by('author', '-created_on').distinct('author')
+    # Gets the most recent post from each user ordered
+    # by user - will be ordered by date in template
+    queryset = Post.objects.order_by('author', '-created_on').distinct('author')
     template_name = 'home.html'
