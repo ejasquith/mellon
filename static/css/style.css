@@ -1,5 +1,9 @@
 .post-btn {
-    background-color: blueviolet;
+    background-color: rgb(138, 43, 226);
+    color: white;
+}
+.post-btn:hover {
+    background-color: rgb(108, 23, 206);
     color: white;
 }
 
