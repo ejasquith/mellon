@@ -67,7 +67,10 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Post form here
+                        <form id="create-post-form">
+                            {% csrf_token %}
+                            <textarea id="body" name="body" placeholder="What's on your mind?"></textarea>
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
@@ -99,8 +102,7 @@
                 <a href="https://www.linkedin.com/in/ejasquith/"><i class="fa-brands fa-linkedin-in"></i></a>
             </p>
         </footer>
-    </body>
-    </body>
+    </body>     
 
     </html>
 </DOCTYPE>
