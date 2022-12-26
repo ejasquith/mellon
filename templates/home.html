@@ -14,14 +14,29 @@
             </div>
             <div class="card-footer bg-white">
                 <!--Like Button-->
-                <button class="btn btn-like" data-post-id="{{ post.id }}">
-                    {% if user in post.likes.all %}
-                    <i class="fas fa-heart"></i>
-                    {% else %}
-                    <i class="far fa-heart"></i>
-                    {% endif %}
-                </button>
-                <span class="text-secondary likes">{{ post.num_likes }}</span>
+                <span class="post-likes-display">
+                    <button class="btn btn-like" data-post-id="{{ post.id }}">
+                        {% if user in post.likes.all %}
+                        <i class="fas fa-heart"></i>
+                        {% else %}
+                        <i class="far fa-heart"></i>
+                        {% endif %}
+                    </button>
+                    <span class="text-secondary likes">{{ post.num_likes }}</span>
+                </span>
+                <!--Comments-->
+                <span class="post-comments-display">
+                    <i class="far fa-comment"></i>
+                    <span class="text-secondary comments">{{ post.comments.count }}</span>
+                </span>
+                
+                <!--Comment form-->
+                <form id="create-comment-form">
+                    {% csrf_token %}
+                    <input type="hidden" id="post" name="post" value="{{ post.id }}">
+                    <textarea id="body" name="body" placeholder="What's on your mind?" rows="4"></textarea>
+                    <input type="submit" value="Post" class="btn post-btn"></input>
+                </form>
             </div>
         </div>
         {% endfor %}
@@ -62,6 +77,33 @@
                 }
             });
         });
+
+        // Handle comment form submission
+        $('#create-comment-form').submit(function (event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                const csrfToken = formData.get('csrfmiddlewaretoken');
+                const body = formData.get('body');
+                const post_id = formData.get('post');
+
+                // Send an AJAX request to the server to create the post
+                $.ajax({
+                    url: '{% url "create_comment" %}',
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrfToken,
+                    },
+                    data: {
+                        'body': body,
+                        'post_id': post_id,
+                    },
+                    success: function (data) {
+                        // Update comments number
+                        // Clear form
+                        // Display comment
+                    },
+                });
+            });
     });    
 </script>
 {% endblock %}

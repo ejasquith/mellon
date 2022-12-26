@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.utils import timezone
 from django.http import JsonResponse
 
-from .models import Post
+from .models import Post, Comment
 from accounts.models import CustomUser as User
 
 
@@ -25,6 +25,19 @@ class CreatePost(View):
         author = request.user
         post = Post.objects.create(body=body, author=author)
         return JsonResponse({'status': 'success'})
+
+
+class CreateComment(View):
+    def post(self, request):
+        data = request.POST
+        body = data.get('body')
+        author = request.user
+        post = get_object_or_404(Post, id=data.get('post_id'))
+        comment = Comment.objects.create(body=body, author=author, post=post)
+        return JsonResponse({
+            'status': 'success',
+            'author': author.username
+        })
 
 
 class LikePost(View):
