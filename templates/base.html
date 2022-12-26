@@ -15,7 +15,8 @@
             integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
         </script>
         <!--jQuery-->
-        <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.3.js"
+            integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
 
 
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -104,11 +105,36 @@
                 <a href="https://www.linkedin.com/in/ejasquith/"><i class="fa-brands fa-linkedin-in"></i></a>
             </p>
         </footer>
-    </body>     
+    </body>
 
     <script>
         $('#post-modal').on('hidden.bs.modal', function (e) {
             $('#create-post-form').trigger('reset');
+        });
+
+        $(document).ready(function () {
+            $('#create-post-form').submit(function (event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                const csrfToken = formData.get('csrfmiddlewaretoken');
+                const body = formData.get('body');
+
+                // Send an AJAX request to the server to create the post
+                $.ajax({
+                    url: '{% url "create_post" %}',
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrfToken,
+                    },
+                    data: {
+                        'body': body,
+                    },
+                    success: function (data) {
+                        // Handle the response from the server
+                        console.log(data);
+                    },
+                });
+            });
         });
     </script>
 
