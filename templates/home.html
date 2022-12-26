@@ -6,7 +6,7 @@
         <!--Post Display-->
         {% if user.is_authenticated %}
         {% for post in post_list|dictsortreversed:"created_on" %}
-        <div class="col-md-6 offset-md-3 mt-4 card post">
+        <div class="col-md-6 offset-md-3 mt-4 card post" data-post-id="{{ post.id }}">
             <div class="card-body">
                 <div class="author">{{ post.author }}</div>
                 <div class="body">{{ post.body }}</div>
@@ -15,7 +15,7 @@
             <div class="card-footer bg-white">
                 <!--Like Button-->
                 <span class="post-likes-display">
-                    <button class="btn btn-like" data-post-id="{{ post.id }}">
+                    <button class="btn btn-like">
                         {% if user in post.likes.all %}
                         <i class="fas fa-heart"></i>
                         {% else %}
@@ -27,7 +27,7 @@
                 <!--Comments-->
                 <span class="post-comments-display">
                     <i class="far fa-comment"></i>
-                    <span class="text-secondary comments">{{ post.comments.count }}</span>
+                    <span class="text-secondary comments-count">{{ post.comments.count }}</span>
                 </span>
                 
                 <!--Comment form-->
@@ -52,7 +52,7 @@
     $(document).ready(function () {
         // Handle like button
         $('.btn-like').click(function () {
-            const postId = $(this).attr('data-post-id');
+            const postId = $(this).closest('.post').attr('data-post-id');
             // Send an AJAX request to the server to like the post
             $.ajax({
                 url: '{% url "like_post" %}',
@@ -64,7 +64,7 @@
                     'post_id': postId,
                 },
                 success: function (data) {
-                    let button = $('.btn-like[data-post-id=' + postId + ']')
+                    let button = $('.post[data-post-id=' + postId + ']').find('.btn-like')
                     // Update number of likes
                     button.siblings('.likes').first()
                         .text(data.num_likes);
