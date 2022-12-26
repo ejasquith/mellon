@@ -5,18 +5,69 @@
     <div class="row">
         <!--Post Display-->
         {% if user.is_authenticated %}
-            {% for post in post_list|dictsortreversed:"created_on" %}
-                <div class="col-md-6 offset-md-3 mt-4 card">
-                    <div class="card-body">
-                        <div class="author">{{ post.author }}</div>
-                        <div class="body">{{ post.body }}</div>
-                        <div class="created">{{ post.created_on }}</div>
-                    </div>
-                </div>
-            {% endfor %}
+        {% for post in post_list|dictsortreversed:"created_on" %}
+        <div class="col-md-6 offset-md-3 mt-4 card post">
+            <div class="card-body">
+                {{ post.id }}
+                <div class="author">{{ post.author }}</div>
+                <div class="body">{{ post.body }}</div>
+                <div class="created">{{ post.created_on }}</div>
+            </div>
+            <div class="card-footer">
+
+                <!--Like Button-->
+                <button class="btn btn-like" data-post-id="{{ post.id }}">
+                    {% if user in post.likes.all %}
+                    <i class="fas fa-heart"></i>
+                    {% else %}
+                    <i class="far fa-heart"></i>
+                    {% endif %}
+                </button>
+                <span class="text-secondary likes">{{ post.num_likes }}</span>
+            </div>
+        </div>
+        {% endfor %}
         {% else %}
-            <h2>You're not signed up</h2>
+        <h2>You're not signed up</h2>
         {% endif %}
     </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    // Handle like button
+    $('.btn-like').click(function () {
+        console.log('clicked');
+        const postId = $(this).attr('data-post-id');
+        // Send an AJAX request to the server to like the post
+        $.ajax({
+            url: '{% url "like_post" %}',
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            data: {
+                'post_id': postId,
+            },
+            success: function (data) {
+                console.log('success');
+                let button = $('.btn-like[data-post-id=' + postId + ']')
+                // Update number of likes
+                button.siblings('.likes').first()
+                    .text(data.num_likes);
+                // Update like buton display
+                console.log(data.liked)
+                if (data.liked) {
+                    button.html('<i class="fas fa-heart"></i>')
+                } else {
+                    button.html('<i class="far fa-heart"></i>')
+                }
+            },
+            error: function (data) {
+                console.log('error: ' + data);
+            }
+        })
+    });
+</script>
 {% endblock %}

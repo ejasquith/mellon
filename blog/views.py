@@ -24,4 +24,24 @@ class CreatePost(View):
         body = data.get('body')
         author = request.user
         post = Post.objects.create(body=body, author=author)
-        return JsonResponse({'status':'success'})
+        return JsonResponse({'status': 'success'})
+
+
+class LikePost(View):
+    def post(self, request):
+        data = request.POST
+        id = data.get('post_id')
+        post = get_object_or_404(Post, id=id)
+        if post.likes.filter(id=request.user.id).exists():
+            post.likes.remove(request.user)
+        else:
+            post.likes.add(request.user)
+        liked = post.likes.filter(id=request.user.id).exists()
+
+        # Passes back updated data to the template so that
+        # relevant fields can be updated easily
+        return JsonResponse({
+            'status': 'success',
+            'num_likes': post.num_likes(),
+            'liked': liked
+        })

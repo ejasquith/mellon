@@ -19,6 +19,9 @@ class Post(models.Model):
     def num_likes(self):
         return self.likes.count()
 
+    def liked_by_current_user(self):
+        return self.likes.filter(id=request.user.id).exists
+
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
