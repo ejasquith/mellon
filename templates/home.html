@@ -8,7 +8,6 @@
         {% for post in post_list|dictsortreversed:"created_on" %}
         <div class="col-md-6 offset-md-3 mt-4 card post">
             <div class="card-body">
-                {{ post.id }}
                 <div class="author">{{ post.author }}</div>
                 <div class="body">{{ post.body }}</div>
                 <div class="created">{{ post.created_on }}</div>
