@@ -100,8 +100,9 @@
                     success: function (data) {
                         // Update comments number
                         $('.post[data-post-id=' + postId + ']').find('.comments-count')
-                          .text(data.comments_count)
+                          .text(data.comments_count);
                         // Clear form
+                        $('#create-comment-form').trigger('reset');
                         // Display comment
                     },
                 });
