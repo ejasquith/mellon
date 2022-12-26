@@ -36,38 +36,34 @@
 
 {% block script %}
 <script>
-    // Handle like button
-    $('.btn-like').click(function () {
-        console.log('clicked');
-        const postId = $(this).attr('data-post-id');
-        // Send an AJAX request to the server to like the post
-        $.ajax({
-            url: '{% url "like_post" %}',
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}',
-            },
-            data: {
-                'post_id': postId,
-            },
-            success: function (data) {
-                console.log('success');
-                let button = $('.btn-like[data-post-id=' + postId + ']')
-                // Update number of likes
-                button.siblings('.likes').first()
-                    .text(data.num_likes);
-                // Update like buton display
-                console.log(data.liked)
-                if (data.liked) {
-                    button.html('<i class="fas fa-heart"></i>')
-                } else {
-                    button.html('<i class="far fa-heart"></i>')
+    $(document).ready(function () {
+        // Handle like button
+        $('.btn-like').click(function () {
+            const postId = $(this).attr('data-post-id');
+            // Send an AJAX request to the server to like the post
+            $.ajax({
+                url: '{% url "like_post" %}',
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                data: {
+                    'post_id': postId,
+                },
+                success: function (data) {
+                    let button = $('.btn-like[data-post-id=' + postId + ']')
+                    // Update number of likes
+                    button.siblings('.likes').first()
+                        .text(data.num_likes);
+                    // Update like buton display
+                    if (data.liked) {
+                        button.html('<i class="fas fa-heart"></i>');
+                    } else {
+                        button.html('<i class="far fa-heart"></i>');
+                    }
                 }
-            },
-            error: function (data) {
-                console.log('error: ' + data);
-            }
-        })
-    });
+            });
+        });
+    });    
 </script>
 {% endblock %}
