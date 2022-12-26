@@ -84,7 +84,7 @@
                 const formData = new FormData(this);
                 const csrfToken = formData.get('csrfmiddlewaretoken');
                 const body = formData.get('body');
-                const post_id = formData.get('post');
+                const postId = formData.get('post');
 
                 // Send an AJAX request to the server to create the post
                 $.ajax({
@@ -95,10 +95,12 @@
                     },
                     data: {
                         'body': body,
-                        'post_id': post_id,
+                        'post_id': postId,
                     },
                     success: function (data) {
                         // Update comments number
+                        $('.post[data-post-id=' + postId + ']').find('.comments-count')
+                          .text(data.comments_count)
                         // Clear form
                         // Display comment
                     },
