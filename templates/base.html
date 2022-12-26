@@ -129,6 +129,8 @@
                         'body': body,
                     },
                     success: function (data) {
+                        // Close post modal
+                        $('#post-modal').modal('hide');
                         // Display success message
                     },
                 });
