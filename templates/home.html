@@ -121,6 +121,8 @@
                         // Clear form
                         $('#create-comment-form').trigger('reset');
                         // Display comment
+                        $('.post[data-post-id=' + postId + ']').find('.comments-display')
+                          .append(`<div class="comment mt-4"><div class="comment-author">${data.author}</div><div class="comment-body">${body}</div><div class="comment-date">Just now</div></div>`)
                     },
                 });
             });
