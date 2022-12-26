@@ -24,7 +24,7 @@
                     </button>
                     <span class="text-secondary likes">{{ post.num_likes }}</span>
                 </span>
-                <!--Comments-->
+                <!--Comment Count & Button-->
                 <span class="post-comments-display">
                     <i class="far fa-comment"></i>
                     <span class="text-secondary comments-count">{{ post.comments.count }}</span>
@@ -37,6 +37,23 @@
                     <textarea id="body" name="body" placeholder="What's on your mind?" rows="4"></textarea>
                     <input type="submit" value="Post" class="btn post-btn"></input>
                 </form>
+
+                <!--Comments Display-->
+                <div class="comments-display">
+                    {% for comment in post.comments.all %}
+                        <div class="comment mt-4">
+                            <div class="comment-author">
+                                {{ comment.author }}
+                            </div>
+                            <div class="comment-body">
+                                {{ comment.body }}
+                            </div>
+                            <div class="comment-date">
+                                {{ comment.created_on }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
         {% endfor %}
