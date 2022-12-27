@@ -51,8 +51,7 @@
                     </form>
 
                     <!--Comments Display-->
-                    {% if post.comments.all %}
-                    <div class="comments-display">
+                    <div class="comments-display {% if not post.comments.all %} d-none {% endif %}">
                         {% for comment in post.comments.all %}
                             <div class="comment">
                                 <div class="comment-header">
@@ -72,7 +71,6 @@
                             </div>
                         {% endfor %}
                     </div>
-                    {% endif %}
                 </div>
             </div>
         </div>
@@ -157,6 +155,8 @@
                           .text(data.comments_count);
                         // Clear form
                         $('.create-comment-form').trigger('reset');
+                        // Display comment section
+                        $('.post[data-post-id=' + postId + ']').find('.comments-display').removeClass('d-none');
                         // Display comment
                         $('.post[data-post-id=' + postId + ']').find('.comments-display')
                           .append(`<div class="comment"><div class="comment-author">${data.author}</div><div class="comment-body">${body}</div><div class="comment-date">Just now</div></div>`)
