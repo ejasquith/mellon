@@ -29,30 +29,33 @@
                     <i class="far fa-comment"></i>
                     <span class="text-secondary comments-count">{{ post.comments.count }}</span>
                 </span>
-                
-                <!--Comment form-->
-                <form id="create-comment-form">
-                    {% csrf_token %}
-                    <input type="hidden" id="post" name="post" value="{{ post.id }}">
-                    <textarea id="body" name="body" placeholder="What's on your mind?" rows="4"></textarea>
-                    <input type="submit" value="Post" class="btn post-btn"></input>
-                </form>
+                <div class="comment-section d-none">
+                    <!--Comment form-->
+                    <form id="create-comment-form">
+                        {% csrf_token %}
+                        <input type="hidden" id="post" name="post" value="{{ post.id }}">
+                        <textarea id="body" name="body" placeholder="What's on your mind?" rows="4"></textarea>
+                        <input type="submit" value="Post" class="btn post-btn"></input>
+                    </form>
 
-                <!--Comments Display-->
-                <div class="comments-display">
-                    {% for comment in post.comments.all %}
-                        <div class="comment">
-                            <div class="comment-author">
-                                {{ comment.author }}
+                    <!--Comments Display-->
+                    <div class="comments-display">
+                        {% for comment in post.comments.all %}
+                            <div class="comment">
+                                <div class="comment-author">
+                                    {{ comment.author }}
+                                </div>
+                                <div class="comment-body">
+                                    {{ comment.body }}
+                                </div>
+                                <div class="comment-date">
+                                    {{ comment.created_on }}
+                                </div>
                             </div>
-                            <div class="comment-body">
-                                {{ comment.body }}
-                            </div>
-                            <div class="comment-date">
-                                {{ comment.created_on }}
-                            </div>
-                        </div>
-                    {% endfor %}
+                        {% empty %}
+                            <p class="comments-empty">Nothing to see here :(</p>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -93,6 +96,25 @@
                     }
                 }
             });
+        });
+
+        // Toggle comments section
+        $('.post-comments-display').click(function (event) {
+            console.log('clicked')
+            console.log($(event.target))
+            // Determines whether user clicked parent or child element
+            let section;
+            if ($(event.target).hasClass('post-comments-display')) {
+                section = $(event.target).siblings('.comment-section').first();
+            } else {
+                section = $(event.target).parent().siblings('.comment-section').first();
+            }
+            // Toggle display
+            if (section.hasClass('d-none')) {
+                section.removeClass('d-none');
+            } else {
+                section.addClass('d-none');
+            }
         });
 
         // Handle comment form submission
