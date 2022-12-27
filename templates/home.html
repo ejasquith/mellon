@@ -8,7 +8,7 @@
         {% for post in post_list|dictsortreversed:"created_on" %}
         <div class="col-md-6 offset-md-3 mt-4 card post" data-post-id="{{ post.id }}">
             <div class="card-body">
-                <div class="author-info">
+                <div class="post-header">
                     <span class="author-image">
                         <img src="{{ post.author.profile_picture.url }}">
                     </span>
@@ -16,7 +16,7 @@
                         <p>{{ post.author.display_name }} <span class="text-secondary">({{ post.author.username }})</span></p>
                     </span>
                 </div>
-                <div class="post-body mt-4">
+                <div class="post-body mt-3">
                     {{ post.body }}
                 </div>
             </div>
@@ -54,7 +54,7 @@
                     <div class="comments-display">
                         {% for comment in post.comments.all %}
                             <div class="comment">
-                                <div class="comment-author-info">
+                                <div class="comment-header">
                                     <span class="comment-author-image">
                                         <img src="{{ comment.author.profile_picture.url }}">
                                     </span>

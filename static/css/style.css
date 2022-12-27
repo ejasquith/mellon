@@ -32,7 +32,7 @@
     border: 1px solid lightgrey;
 }
 
-.author-info, .comment-author-info {
+.post-header, .comment-header {
     display: flex;
     align-items: center;
 }
