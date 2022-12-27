@@ -1,93 +1,77 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <!--Post Display-->
-        {% if user.is_authenticated %}
-        {% for post in post_list|dictsortreversed:"created_on" %}
-        <div class="col-md-6 offset-md-3 mt-4 card post" data-post-id="{{ post.id }}">
-            <div class="card-body">
-                <a href="{% url 'profile' post.author.username %}">
-                    <div class="post-header">
-                        <span class="author-image">
-                            <img src="{{ post.author.profile_picture.url }}">
-                        </span>
-                        <span class="author-display-name">
-                            <p>{{ post.author.display_name }} <span class="text-secondary">({{ post.author.username }})</span></p>
-                        </span>
-                    </div>
-                </a>
-                <div class="post-body mt-3">
-                    {{ post.body }}
-                </div>
+    <h1>{{ user.display_name }}</h1>
+    <h2 class="text-secondary">({{ user.username }})</h2>
+    <p>{{ user.bio }}</p>
+    {% for post in user.posts.all %}
+    <div class="col-md-6 offset-md-3 mt-4 card post" data-post-id="{{ post.id }}">
+        <div class="card-body">
+            <div class="post-body">
+                {{ post.body }}
             </div>
-            <div class="card-footer bg-white">
-                <!--Like Button-->
-                <span class="post-likes-display">
-                    <button class="btn btn-like" aria-label="Like or unlike this post">
-                        {% if user in post.likes.all %}
-                        <i class="fas fa-heart"></i>
-                        {% else %}
-                        <i class="far fa-heart"></i>
-                        {% endif %}
-                    </button>
-                    <span class="text-secondary likes">{{ post.num_likes }}</span>
-                </span>
-                <!--Comment Count & Button-->
-                <span class="post-comments-display" role="button" aria-label="Display comments section">
-                    <i class="far fa-comment"></i>
-                    <span class="text-secondary comments-count">{{ post.comments.count }}</span>
-                </span>
-                <!--Timestamp-->
-                <span class="text-secondary post-timestamp">
-                    {{ post.created_on }}
-                </span>
-                <div class="comment-section d-none">
-                    <!--Comment form-->
-                    <form class="create-comment-form">
-                        {% csrf_token %}
-                        <input type="hidden" id="post" name="post" value="{{ post.id }}">
-                        <textarea id="body" name="body" placeholder="What's on your mind?" rows="4"></textarea>
-                        <input type="submit" value="Post" class="btn post-btn"></input>
-                    </form>
+        </div>
+        <div class="card-footer bg-white">
+            <!--Like Button-->
+            <span class="post-likes-display">
+                <button class="btn btn-like" aria-label="Like or unlike this post">
+                    {% if user in post.likes.all %}
+                    <i class="fas fa-heart"></i>
+                    {% else %}
+                    <i class="far fa-heart"></i>
+                    {% endif %}
+                </button>
+                <span class="text-secondary likes">{{ post.num_likes }}</span>
+            </span>
+            <!--Comment Count & Button-->
+            <span class="post-comments-display" role="button" aria-label="Display comments section">
+                <i class="far fa-comment"></i>
+                <span class="text-secondary comments-count">{{ post.comments.count }}</span>
+            </span>
+            <!--Timestamp-->
+            <span class="text-secondary post-timestamp">
+                {{ post.created_on }}
+            </span>
+            <div class="comment-section d-none">
+                <!--Comment form-->
+                <form class="create-comment-form">
+                    {% csrf_token %}
+                    <input type="hidden" id="post" name="post" value="{{ post.id }}">
+                    <textarea id="body" name="body" placeholder="What's on your mind?" rows="4"></textarea>
+                    <input type="submit" value="Post" class="btn post-btn"></input>
+                </form>
 
-                    <!--Comments Display-->
-                    <div class="comments-display {% if not post.comments.all %} d-none {% endif %}">
-                        {% for comment in post.comments.all %}
-                            <div class="comment" data-comment-id="{{ comment.id }}">
-                                <div class="comment-header">
-                                    <span class="comment-author-image">
-                                        <img src="{{ comment.author.profile_picture.url }}">
-                                    </span>
-                                    <span class="comment-author-display-name">
-                                        <p>{{ comment.author.display_name }} <span class="text-secondary">({{ comment.author.username }})</span></p>
-                                    </span>
-                                    <span class="text-secondary comment-timestamp">
-                                        <p>{{ comment.created_on }}</p>
-                                    </span>
-                                </div>
-                                <div class="comment-body mt-2">
-                                    {{ comment.body }}
-                                </div>
-                                {% if user == comment.author %}
-                                <div class="text-secondary btn btn-delete-comment" role="button" aria-label="Delete comment">
-                                    <i class="far fa-trash-can"></i>
-                                </div>
-                                {% endif %}
+                <!--Comments Display-->
+                <div class="comments-display {% if not post.comments.all %} d-none {% endif %}">
+                    {% for comment in post.comments.all %}
+                        <div class="comment" data-comment-id="{{ comment.id }}">
+                            <div class="comment-header">
+                                <span class="comment-author-image">
+                                    <img src="{{ comment.author.profile_picture.url }}">
+                                </span>
+                                <span class="comment-author-display-name">
+                                    <p>{{ comment.author.display_name }} <span class="text-secondary">({{ comment.author.username }})</span></p>
+                                </span>
+                                <span class="text-secondary comment-timestamp">
+                                    <p>{{ comment.created_on }}</p>
+                                </span>
                             </div>
-                        {% endfor %}
-                    </div>
+                            <div class="comment-body mt-2">
+                                {{ comment.body }}
+                            </div>
+                            {% if user == comment.author %}
+                            <div class="text-secondary btn btn-delete-comment" role="button" aria-label="Delete comment">
+                                <i class="far fa-trash-can"></i>
+                            </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
-        {% endfor %}
-        {% else %}
-        <h2>You're not signed up</h2>
-        {% endif %}
     </div>
-</div>
-{% endblock %}
+    {% endfor %}
+{% endblock content %}
 
 {% block script %}
 <script>
@@ -208,4 +192,4 @@
             });
     });    
 </script>
-{% endblock %}
+{% endblock script %}
