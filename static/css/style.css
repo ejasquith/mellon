@@ -32,13 +32,18 @@
     border: 1px solid lightgrey;
 }
 
-.author-info {
+.author-info, .comment-author-info {
     display: flex;
     align-items: center;
 }
 
 .author-image {
     width: 50px;
+    margin-right: 10px;
+}
+
+.comment-author-image {
+    width: 40px;
     margin-right: 10px;
 }
 
@@ -49,11 +54,18 @@
     object-fit: cover;
 }
 
-.author-display-name {
-    width: calc(100% - 60px);
+.comment-author-image img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
-.post-body {
+.author-display-name, .comment-author-display-name {
+    margin-right: 10px;
+}
+
+.post-body, .comment-body {
     padding: 0 10px;
 }
 

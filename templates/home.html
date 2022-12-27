@@ -13,7 +13,7 @@
                         <img src="{{ post.author.profile_picture.url }}">
                     </span>
                     <span class="author-display-name">
-                        <p class="d-inline">{{ post.author.display_name }}</p>
+                        <p>{{ post.author.display_name }} <span class="text-secondary">({{ post.author.username }})</span></p>
                     </span>
                 </div>
                 <div class="post-body mt-4">
@@ -54,14 +54,19 @@
                     <div class="comments-display">
                         {% for comment in post.comments.all %}
                             <div class="comment">
-                                <div class="comment-author">
-                                    {{ comment.author }}
+                                <div class="comment-author-info">
+                                    <span class="comment-author-image">
+                                        <img src="{{ comment.author.profile_picture.url }}">
+                                    </span>
+                                    <span class="comment-author-display-name">
+                                        <p>{{ comment.author.display_name }} <span class="text-secondary">({{ post.author.username }})</span></p>
+                                    </span>
+                                    <span class="text-secondary comment-timestamp">
+                                        <p>{{ comment.created_on }}</p>
+                                    </span>
                                 </div>
-                                <div class="comment-body">
+                                <div class="comment-body mt-2">
                                     {{ comment.body }}
-                                </div>
-                                <div class="comment-date">
-                                    {{ comment.created_on }}
                                 </div>
                             </div>
                         {% empty %}
