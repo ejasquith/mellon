@@ -161,11 +161,17 @@
                         // Clear form
                         $('.create-comment-form').trigger('reset');
                         // Display comment
+                        let bodyCleaned = cleanHTML(body);
                         $('.post[data-post-id=' + postId + ']').find('.comments-display').removeClass('d-none');
                         $('.post[data-post-id=' + postId + ']').find('.comments-display')
-                          .append(`<div class="comment"><div class="comment-header"><span class="comment-author-image"><img src="${ data.author.profile_picture_url }"></span><span class="comment-author-display-name"><p>${ data.author.display_name } <span class="text-secondary">(${ data.author.username })</span></p></span><span class="text-secondary comment-timestamp"><p>Just now</p></span></div><div class="comment-body mt-2">${body}</div></div>`);
+                          .append(`<div class="comment"><div class="comment-header"><span class="comment-author-image"><img src="${ data.author.profile_picture_url }"></span><span class="comment-author-display-name"><p>${ data.author.display_name } <span class="text-secondary">(${ data.author.username })</span></p></span><span class="text-secondary comment-timestamp"><p>Just now</p></span></div><div class="comment-body mt-2">${bodyCleaned}</div></div>`);
                         // Display message
-                        displayMessage(data.msg);
+                        $('.messages').append(`
+                            <div class="alert ${data.msg.tag} alert-dismissible fade show"
+                                id="msg" role="alert">
+                                ${data.msg.message}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>`);
                     },
                 });
             });
