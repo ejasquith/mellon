@@ -24,7 +24,15 @@ class CreatePost(View):
         body = data.get('body')
         author = request.user
         post = Post.objects.create(body=body, author=author)
-        return JsonResponse({'status': 'success'})
+        return JsonResponse({
+            'status': 'success',
+            # Hacky way to display messages with ajax requests
+            # Doesn't actually use messages framework
+            'msg': {
+                'tag': 'alert-success',
+                'message': 'Post created successfully.'
+            }
+        })
 
 
 class CreateComment(View):
@@ -36,10 +44,16 @@ class CreateComment(View):
         comment = Comment.objects.create(body=body, author=author, post=post)
         return JsonResponse({
             'status': 'success',
-            'author_username': author.username,
-            'author_display_name': author.display_name,
-            'author_profile_picture_url': author.profile_picture.url,
-            'comments_count': comment.post.comments.count()
+            'author': {
+                'username': author.username,
+                'display_name': author.display_name,
+                'profile_picture_url': author.profile_picture.url
+            },
+            'comments_count': comment.post.comments.count(),
+            'msg': {
+                'tag': 'alert-success',
+                'message': 'Comment created successfully'
+            }
         })
 
 
@@ -53,11 +67,20 @@ class DeleteComment(View):
             return JsonResponse({
                 'status': 'success',
                 'post_id': comment.post.id,
-                'comments_count': comment.post.comments.count()
+                'comments_count': comment.post.comments.count(),
+                
+                'msg': {
+                    'tag': 'alert-success',
+                    'message': 'Comment deleted'
+                }
             })
         else:
             return JsonResponse({
                 'status': 'error',
+                'msg': {
+                    'tag': 'alert-error',
+                    'message': 'An error occurred. Please try again.'
+                }
             })
 
 
@@ -72,8 +95,6 @@ class LikePost(View):
             post.likes.add(request.user)
         liked = post.likes.filter(id=request.user.id).exists()
 
-        # Passes back updated data to the template so that
-        # relevant fields can be updated easily
         return JsonResponse({
             'status': 'success',
             'num_likes': post.num_likes(),
