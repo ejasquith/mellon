@@ -43,6 +43,24 @@ class CreateComment(View):
         })
 
 
+class DeleteComment(View):
+    def post(self, request):
+        data = request.POST
+        id = data.get('comment_id')
+        comment = get_object_or_404(Comment, id=id)
+        if request.user == comment.author:
+            comment.delete()
+            return JsonResponse({
+                'status': 'success',
+                'post_id': comment.post.id,
+                'comments_count': comment.post.comments.count()
+            })
+        else:
+            return JsonResponse({
+                'status': 'error',
+            })
+
+
 class LikePost(View):
     def post(self, request):
         data = request.POST

@@ -53,7 +53,7 @@
                     <!--Comments Display-->
                     <div class="comments-display {% if not post.comments.all %} d-none {% endif %}">
                         {% for comment in post.comments.all %}
-                            <div class="comment">
+                            <div class="comment" data-comment-id="{{ comment.id }}">
                                 <div class="comment-header">
                                     <span class="comment-author-image">
                                         <img src="{{ comment.author.profile_picture.url }}">
@@ -68,6 +68,11 @@
                                 <div class="comment-body mt-2">
                                     {{ comment.body }}
                                 </div>
+                                {% if user == comment.author %}
+                                <div class="text-secondary btn btn-delete-comment" role="button" aria-label="Delete comment">
+                                    <i class="far fa-trash-can"></i>
+                                </div>
+                                {% endif %}
                             </div>
                         {% endfor %}
                     </div>
@@ -160,6 +165,34 @@
                         $('.post[data-post-id=' + postId + ']').find('.comments-display')
                           .append(`<div class="comment"><div class="comment-header"><span class="comment-author-image"><img src="${ data.author_profile_picture_url }"></span><span class="comment-author-display-name"><p>${ data.author_display_name } <span class="text-secondary">(${ data.author_username })</span></p></span><span class="text-secondary comment-timestamp"><p>Just now</p></span></div><div class="comment-body mt-2">${body}</div></div>`);
                     },
+                });
+            });
+
+            // Handle delete comment button
+            $('.btn-delete-comment').click(function () {
+                const commentId = $(this).closest('.comment').attr('data-comment-id');
+                // Send an AJAX request to the server to delete comment
+                $.ajax({
+                    url: '{% url "delete_comment" %}',
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    data: {
+                        'comment_id': commentId,
+                    },
+                    success: function (data) {
+                        // Remove comment
+                        $('.comment[data-comment-id=' + commentId + ']').remove();
+                        // Update comments count
+                        console.log(data.comments_count)
+                        $('.post[data-post-id=' + data.post_id + ']').find('.comments-count')
+                          .text(data.comments_count);
+                        // Hide comment section if count = 0
+                        if (data.comments_count === 0) {
+                            $('.post[data-post-id=' + data.post_id + ']').find('.comments-display').addClass('d-none');
+                        }
+                    }
                 });
             });
     });    
