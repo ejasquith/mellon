@@ -1,12 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{{ user.display_name }}</h1>
-    <h2 class="text-secondary">({{ user.username }})</h2>
-    <p>{{ user.bio }}</p>
-    {% if is_current_user %}
-        <button class="btn post-btn">Edit Profile</button>
-    {% endif %}
+    <div class="profile-header">
+        <div class="profile-info">
+            <img class="pfp pfp-l" src="{{ user.profile_picture.url }}">
+            <span class="user-names">
+                <h1 class="fs-2">{{ user.display_name }}</h1>
+                <h2 class="text-secondary fs-3">({{ user.username }})</h2>
+            </span>
+        </div>
+        {% if user.bio %}
+            <div class="bio-container">
+                <p class="text-secondary">{{ user.bio }}</p>
+            </div>
+            {% endif %}
+        {% if is_current_user %}
+            <button class="btn btn-purple edit-profile-btn">Edit Profile</button>
+        {% endif %}
+        <!--else if friend btn-->
+    </div>
     {% for post in user.posts.all %}
         {% include 'post_template.html' %}
     {% endfor %}

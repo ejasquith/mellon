@@ -89,7 +89,7 @@
                         </div>
                         <div class="modal-footer">
                             <input type="reset" value="Close" class="btn btn-danger" data-bs-dismiss="modal"></input>
-                            <input type="submit" value="Post" class="btn post-btn"></input>
+                            <input type="submit" value="Post" class="btn btn-purple"></input>
                         </div>
                     </form>
                 </div>
@@ -99,7 +99,7 @@
 
         <!--Create Post Button-->
         {% if user.is_authenticated %}
-        <button type="button" id="create-post-btn" class="btn post-btn" data-bs-toggle="modal"
+        <button type="button" id="create-post-btn" class="btn btn-purple" data-bs-toggle="modal"
             data-bs-target="#post-modal">
             <i class="fa-solid fa-pen-to-square"></i>
         </button>
