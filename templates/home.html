@@ -51,6 +51,7 @@
                     </form>
 
                     <!--Comments Display-->
+                    {% if post.comments.all %}
                     <div class="comments-display">
                         {% for comment in post.comments.all %}
                             <div class="comment">
@@ -69,10 +70,9 @@
                                     {{ comment.body }}
                                 </div>
                             </div>
-                        {% empty %}
-                            <p class="comments-empty">Nothing to see here :(</p>
                         {% endfor %}
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
