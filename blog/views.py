@@ -36,7 +36,9 @@ class CreateComment(View):
         comment = Comment.objects.create(body=body, author=author, post=post)
         return JsonResponse({
             'status': 'success',
-            'author': author.username,
+            'author_username': author.username,
+            'author_display_name': author.display_name,
+            'author_profile_picture_url': author.profile_picture.url,
             'comments_count': comment.post.comments.count()
         })
 

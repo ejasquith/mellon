@@ -155,11 +155,10 @@
                           .text(data.comments_count);
                         // Clear form
                         $('.create-comment-form').trigger('reset');
-                        // Display comment section
-                        $('.post[data-post-id=' + postId + ']').find('.comments-display').removeClass('d-none');
                         // Display comment
+                        $('.post[data-post-id=' + postId + ']').find('.comments-display').removeClass('d-none');
                         $('.post[data-post-id=' + postId + ']').find('.comments-display')
-                          .append(`<div class="comment"><div class="comment-author">${data.author}</div><div class="comment-body">${body}</div><div class="comment-date">Just now</div></div>`)
+                          .append(`<div class="comment"><div class="comment-header"><span class="comment-author-image"><img src="${ data.author_profile_picture_url }"></span><span class="comment-author-display-name"><p>${ data.author_display_name } <span class="text-secondary">(${ data.author_username })</span></p></span><span class="text-secondary comment-timestamp"><p>Just now</p></span></div><div class="comment-body mt-2">${body}</div></div>`);
                     },
                 });
             });
