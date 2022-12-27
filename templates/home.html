@@ -7,10 +7,18 @@
         {% if user.is_authenticated %}
         {% for post in post_list|dictsortreversed:"created_on" %}
         <div class="col-md-6 offset-md-3 mt-4 card post" data-post-id="{{ post.id }}">
-            <div class="card-body">
-                <div class="author">{{ post.author }}</div>
-                <div class="body">{{ post.body }}</div>
-                <div class="created">{{ post.created_on }}</div>
+            <div class="card-body container-fluid">
+                <div class="row author-info">
+                    <span class="author-image">
+                        <img src="{{ post.author.profile_picture.url }}">
+                    </span>
+                    <span class="author-display-name">
+                        <p class="d-inline">{{ post.author.display_name }}</p>
+                    </span>
+                </div>
+                <div class="row post-body mt-4">
+                    {{ post.body }}
+                </div>
             </div>
             <div class="card-footer bg-white">
                 <!--Like Button-->
@@ -28,6 +36,9 @@
                 <span class="post-comments-display">
                     <i class="far fa-comment"></i>
                     <span class="text-secondary comments-count">{{ post.comments.count }}</span>
+                </span>
+                <span class="text-secondary post-timestamp" style="float:right;">
+                    {{ post.created_on }}
                 </span>
                 <div class="comment-section d-none">
                     <!--Comment form-->
