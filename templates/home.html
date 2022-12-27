@@ -31,7 +31,7 @@
                 </span>
                 <div class="comment-section d-none">
                     <!--Comment form-->
-                    <form id="create-comment-form">
+                    <form class="create-comment-form">
                         {% csrf_token %}
                         <input type="hidden" id="post" name="post" value="{{ post.id }}">
                         <textarea id="body" name="body" placeholder="What's on your mind?" rows="4"></textarea>
@@ -116,7 +116,7 @@
         });
 
         // Handle comment form submission
-        $('#create-comment-form').submit(function (event) {
+        $('.create-comment-form').submit(function (event) {
                 event.preventDefault();
                 const formData = new FormData(this);
                 const csrfToken = formData.get('csrfmiddlewaretoken');
@@ -139,7 +139,7 @@
                         $('.post[data-post-id=' + postId + ']').find('.comments-count')
                           .text(data.comments_count);
                         // Clear form
-                        $('#create-comment-form').trigger('reset');
+                        $('.create-comment-form').trigger('reset');
                         // Display comment
                         $('.post[data-post-id=' + postId + ']').find('.comments-display')
                           .append(`<div class="comment"><div class="comment-author">${data.author}</div><div class="comment-body">${body}</div><div class="comment-date">Just now</div></div>`)
