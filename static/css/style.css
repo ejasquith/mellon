@@ -46,41 +46,19 @@ a {
     border-radius: 50%;
     width: 50px;
     height: 50px;
+    object-fit: cover;
+    margin-right: 10px;
 }
 
 .pfp-s {
     width: 40px;
-    height: 50px;
+    height: 40px;
 }
 
 .pfp-l {
     width: 100px;
     height: 100px;
     margin-right: 20px;
-}
-
-.author-image {
-    width: 50px;
-    margin-right: 10px;
-}
-
-.comment-author-image {
-    width: 40px;
-    margin-right: 10px;
-}
-
-.author-image img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.comment-author-image img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
 }
 
 .author-display-name, .comment-author-display-name {

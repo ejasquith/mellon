@@ -2,8 +2,8 @@
     <div class="card-body">
         <a href="{% url 'profile' post.author.username %}" aria-label="Go to this user's profile">
             <div class="post-header">
-                <span class="author-image">
-                    <img src="{{ post.author.profile_picture.url }}">
+                <span class="post-pfp">
+                    <img class="pfp" src="{{ post.author.profile_picture.url }}">
                 </span>
                 <span class="author-display-name">
                     <p>{{ post.author.display_name }} <span class="text-secondary">({{ post.author.username }})</span></p>
@@ -49,8 +49,8 @@
                 {% for comment in post.comments.all %}
                     <div class="comment" data-comment-id="{{ comment.id }}">
                         <div class="comment-header">
-                            <span class="comment-author-image">
-                                <img src="{{ comment.author.profile_picture.url }}">
+                            <span class="comment-pfp">
+                                <img class="pfp pfp-s" src="{{ comment.author.profile_picture.url }}">
                             </span>
                             <span class="comment-author-display-name">
                                 <p>{{ comment.author.display_name }} <span class="text-secondary">({{ comment.author.username }})</span></p>
