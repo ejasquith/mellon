@@ -57,6 +57,10 @@
     padding: 0 10px;
 }
 
+.post-timestamp {
+    float: right;
+}
+
 .btn-like {
     padding: 0;
 }

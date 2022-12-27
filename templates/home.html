@@ -7,8 +7,8 @@
         {% if user.is_authenticated %}
         {% for post in post_list|dictsortreversed:"created_on" %}
         <div class="col-md-6 offset-md-3 mt-4 card post" data-post-id="{{ post.id }}">
-            <div class="card-body container-fluid">
-                <div class="row author-info">
+            <div class="card-body">
+                <div class="author-info">
                     <span class="author-image">
                         <img src="{{ post.author.profile_picture.url }}">
                     </span>
@@ -16,14 +16,14 @@
                         <p class="d-inline">{{ post.author.display_name }}</p>
                     </span>
                 </div>
-                <div class="row post-body mt-4">
+                <div class="post-body mt-4">
                     {{ post.body }}
                 </div>
             </div>
             <div class="card-footer bg-white">
                 <!--Like Button-->
                 <span class="post-likes-display">
-                    <button class="btn btn-like">
+                    <button class="btn btn-like" aria-label="Like or unlike this post">
                         {% if user in post.likes.all %}
                         <i class="fas fa-heart"></i>
                         {% else %}
@@ -33,11 +33,12 @@
                     <span class="text-secondary likes">{{ post.num_likes }}</span>
                 </span>
                 <!--Comment Count & Button-->
-                <span class="post-comments-display">
+                <span class="post-comments-display" role="button" aria-label="Display comments section">
                     <i class="far fa-comment"></i>
                     <span class="text-secondary comments-count">{{ post.comments.count }}</span>
                 </span>
-                <span class="text-secondary post-timestamp" style="float:right;">
+                <!--Timestamp-->
+                <span class="text-secondary post-timestamp">
                     {{ post.created_on }}
                 </span>
                 <div class="comment-section d-none">
