@@ -1,6 +1,6 @@
 <div class="col-md-6 offset-md-3 mt-4 card post" data-post-id="{{ post.id }}">
     <div class="card-body">
-        <a href="{% url 'profile' post.author.username %}" aria-label="Go to this user's profile">
+        <a href="{% url 'profile' post.author.slug %}" aria-label="Go to this user's profile">
             <div class="post-header">
                 <span class="post-pfp">
                     <img class="pfp" src="{{ post.author.profile_picture.url }}">
