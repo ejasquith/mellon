@@ -3,6 +3,10 @@ a {
     color: inherit;
 }
 
+.navbar {
+    padding-left: 15px;
+}
+
 .btn-purple {
     background-color: rgb(138, 43, 226);
     color: white;
