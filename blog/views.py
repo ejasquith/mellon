@@ -35,6 +35,30 @@ class CreatePost(View):
         })
 
 
+class DeletePost(View):
+    def post(self, request):
+        data = request.POST
+        id = data.get('post_id')
+        post = get_object_or_404(Post, id=id)
+        if request.user == post.author:
+            post.delete()
+            return JsonResponse({
+                'status': 'success',                
+                'msg': {
+                    'tag': 'alert-success',
+                    'message': 'Post deleted'
+                }
+            })
+        else:
+            return JsonResponse({
+                'status': 'error',
+                'msg': {
+                    'tag': 'alert-error',
+                    'message': 'An error occurred. Please try again.'
+                }
+            })
+
+
 class CreateComment(View):
     def post(self, request):
         data = request.POST

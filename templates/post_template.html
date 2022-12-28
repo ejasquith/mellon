@@ -31,9 +31,17 @@
             <i class="far fa-comment"></i>
             <span class="text-secondary comments-count">{{ post.comments.count }}</span>
         </span>
-        <!--Timestamp-->
-        <span class="text-secondary post-timestamp">
-            {{ post.created_on }}
+        <span class="floatright">
+            <!--Timestamp-->
+            <span class="text-secondary post-timestamp">
+                {{ post.created_on }}
+            </span>
+            <!--Delete Button-->
+            {% if post.author == request.user %}
+                <span class="text-secondary btn btn-delete-post" role="button" aria-label="Delete post">
+                    <i class="far fa-trash-can"></i>
+                </span>
+            {% endif %}
         </span>
         <div class="comment-section d-none">
             <!--Comment form-->

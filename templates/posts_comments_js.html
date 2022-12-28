@@ -24,6 +24,9 @@
                     } else {
                         button.html('<i class="far fa-heart"></i>');
                     }
+                },
+                error: function (data) {
+                    displayMessage(data.msg);
                 }
             });
         });
@@ -47,72 +50,103 @@
 
         // Handle comment form submission
         $('.create-comment-form').submit(function (event) {
-                event.preventDefault();
-                const formData = new FormData(this);
-                const csrfToken = formData.get('csrfmiddlewaretoken');
-                const body = formData.get('body');
-                const postId = formData.get('post');
+            event.preventDefault();
+            const formData = new FormData(this);
+            const csrfToken = formData.get('csrfmiddlewaretoken');
+            const body = formData.get('body');
+            const postId = formData.get('post');
 
-                // Send an AJAX request to the server to create the post
-                $.ajax({
-                    url: '{% url "create_comment" %}',
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': csrfToken,
-                    },
-                    data: {
-                        'body': body,
-                        'post_id': postId,
-                    },
-                    success: function (data) {
-                        // Update comments number
-                        $('.post[data-post-id=' + postId + ']').find('.comments-count')
-                          .text(data.comments_count);
-                        // Clear form
-                        $('.create-comment-form').trigger('reset');
-                        // Display comment
-                        let bodyCleaned = cleanHTML(body);
-                        $('.post[data-post-id=' + postId + ']').find('.comments-display').removeClass('d-none');
-                        $('.post[data-post-id=' + postId + ']').find('.comments-display')
-                          .append(`<div class="comment"><div class="comment-header"><span class="comment-author-image"><img src="${ data.author.profile_picture_url }"></span><span class="comment-author-display-name"><p>${ data.author.display_name } <span class="text-secondary">(${ data.author.username })</span></p></span><span class="text-secondary comment-timestamp"><p>Just now</p></span></div><div class="comment-body mt-2">${bodyCleaned}</div></div>`);
-                        // Display message
-                        $('.messages').append(`
-                            <div class="alert ${data.msg.tag} alert-dismissible fade show"
-                                id="msg" role="alert">
-                                ${data.msg.message}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>`);
-                    },
-                });
+            // Send an AJAX request to the server to create the post
+            $.ajax({
+                url: '{% url "create_comment" %}',
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                },
+                data: {
+                    'body': body,
+                    'post_id': postId,
+                },
+                success: function (data) {
+                    // Update comments number
+                    $('.post[data-post-id=' + postId + ']').find('.comments-count')
+                        .text(data.comments_count);
+                    // Clear form
+                    $('.create-comment-form').trigger('reset');
+                    // Display comment
+                    let bodyCleaned = cleanHTML(body);
+                    $('.post[data-post-id=' + postId + ']').find('.comments-display').removeClass('d-none');
+                    $('.post[data-post-id=' + postId + ']').find('.comments-display')
+                        .append(`<div class="comment"><div class="comment-header"><span class="comment-author-image"><img src="${ data.author.profile_picture_url }"></span><span class="comment-author-display-name"><p>${ data.author.display_name } <span class="text-secondary">(${ data.author.username })</span></p></span><span class="text-secondary comment-timestamp"><p>Just now</p></span></div><div class="comment-body mt-2">${bodyCleaned}</div></div>`);
+                    // Display message
+                    $('.messages').append(`
+                        <div class="alert ${data.msg.tag} alert-dismissible fade show"
+                            id="msg" role="alert">
+                            ${data.msg.message}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>`);
+                },
+                error: function (data) {
+                    displayMessage(data.msg);
+                }
             });
+        });
+        // Handle delete post button
+        $('.btn-delete-post').click(function() {
+            console.log('delete post');
+            const postId = $(this).closest('.post').attr('data-post-id');
+            // Send an AJAX request to the server to delete post
+            $.ajax({
+                url: '{% url "delete_post" %}',
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                data: {
+                    'post_id': postId,
+                },
+                success: function (data) {
+                    // Remove comment
+                    $('.post[data-post-id=' + postId + ']').remove();
+                    // Display message
+                    displayMessage(data.msg);
+                },
+                error: function (data) {
+                    displayMessage(data.msg);
+                }
+            });
+        });
 
-            // Handle delete comment button
-            $('.btn-delete-comment').click(function () {
-                const commentId = $(this).closest('.comment').attr('data-comment-id');
-                // Send an AJAX request to the server to delete comment
-                $.ajax({
-                    url: '{% url "delete_comment" %}',
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': '{{ csrf_token }}',
-                    },
-                    data: {
-                        'comment_id': commentId,
-                    },
-                    success: function (data) {
-                        // Remove comment
-                        $('.comment[data-comment-id=' + commentId + ']').remove();
-                        // Update comments count
-                        $('.post[data-post-id=' + data.post_id + ']').find('.comments-count')
-                          .text(data.comments_count);
-                        // Hide comment section if count = 0
-                        if (data.comments_count === 0) {
-                            $('.post[data-post-id=' + data.post_id + ']').find('.comments-display').addClass('d-none');
-                        }
-                        // Display message
-                        displayMessage(data.msg);
+        // Handle delete comment button
+        $('.btn-delete-comment').click(function () {
+            const commentId = $(this).closest('.comment').attr('data-comment-id');
+            // Send an AJAX request to the server to delete comment
+            $.ajax({
+                url: '{% url "delete_comment" %}',
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                data: {
+                    'comment_id': commentId,
+                },
+                success: function (data) {
+                    // Remove comment
+                    $('.comment[data-comment-id=' + commentId + ']').remove();
+                    // Update comments count
+                    $('.post[data-post-id=' + data.post_id + ']').find('.comments-count')
+                        .text(data.comments_count);
+                    // Hide comment section if count = 0
+                    if (data.comments_count === 0) {
+                        $('.post[data-post-id=' + data.post_id + ']').find('.comments-display').addClass('d-none');
                     }
-                });
+                    // Display message
+                    displayMessage(data.msg);
+                },
+                error: function (data) {
+                    displayMessage(data.msg);
+                }
             });
+        });
     });    
 </script>
