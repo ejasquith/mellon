@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    {% if pending_users.all %}
     <div class="friend-requests">
         <h2 class="section-header">Incoming friend requests:</h2>
         {% for pending_user in pending_users %}
@@ -18,6 +19,8 @@
         </div>
         {% endfor %}
     </div>
+    {% endif %}
+    {% if friends.all %}
     <div class="friends">
         <h2 class="section-header">Friends:</h2>
         {% for friend in friends %}
@@ -34,6 +37,9 @@
         </div>
         {% endfor %}
     </div>
+    {% else %}
+    <h2 class="section-header">You don't have any friends. Why not <a href="#">find some?</a></h2>
+    {% endif %}
 {% endblock content %}
 
 {% block script %}
