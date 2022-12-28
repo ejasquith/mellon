@@ -37,13 +37,13 @@
                         </li>
                         {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'friends_list' %}">Friends <span class="notification d-none"><i class="fa-solid fa-circle-exclamation"></i></span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'profile' slug=request.user.slug %}">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                         </li>
                         {% else %}
                         <li class="nav-item">
