@@ -11,7 +11,7 @@
                 <div class="welcome-text">
                     <h2>Welcome to Mellon!</h2>
                     <p>Normally, we'd show off all your friends' posts here, but you don't have any :(</p>
-                    <p><a href="#"><u>Why not find some?<u></a></p>
+                    <p><a href="{% url 'find_friends' %}"><u>Why not find some?<u></a></p>
                 </div>
             {% endfor %}
         {% else %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for user in non_friends %}
+    <div class="row">
+        <div class="user-display card col-md-6 offset-md-3 mb-4" data-user-id="{{ user.id }}">
+            <div class="card-body">
+                <a href="{% url 'profile' user.slug %}">
+                    <span class="user-info">
+                        <img class="pfp pfp-s d-inline" src="{{ user.profile_picture.url }}">
+                        <p class="d-inline">{{ user.display_name }} <span class="text-secondary">({{ user.username }})</span></p>
+                    </span>
+                </a>
+                <span class="floatright btns">
+                    <button class="btn btn-purple add-friend-btn">Add Friend</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock content %}
+
+{% block script %}
+<script>
+    $(document).ready(function () {
+        // Handle add friend button
+        $('.add-friend-btn').click(function (event) {
+            const recipientId = $(this).closest('.user-display').attr('data-user-id');
+            // Send ajax request
+            $.ajax({
+                url: '{% url "add_friend" %}',
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                data: {
+                    'recipient_id': recipientId,
+                },
+                success: function (data) {
+                    // Change add friend button
+                    $('#add-friend-btn').attr('disabled','');
+                    $('#add-friend-btn').text('Friend Request Sent');
+                    displayMessage(data.msg);
+
+                    let btnSpan = $('.user-display[data-user-id=' + recipientId + ']').find('.btns');
+                    btnSpan.empty();
+                    btnSpan.append('<button class="btn" disabled>Request Sent</button>');
+                },
+                error: function (data) {
+                    displayMessage(data.msg);
+                }
+            });
+        });
+    });
+</script>
+{% endblock script %}

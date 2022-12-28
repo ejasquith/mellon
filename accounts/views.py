@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
+from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views import View
 from django.db.models import Q
@@ -139,6 +140,28 @@ class FriendsListView(View):
                 'friends': friends
             }
         )
+
+
+class FindFriendsView(ListView):
+    model = User
+    template_name = 'find_friends.html'
+    context_object_name = 'non_friends'
+
+    def get_queryset(self):
+        user = self.request.user
+        # Gets a list of non-friends by getting all users
+        # then excluding ones where a friendship exists
+        # with the user as either sender or recipient
+        non_friends = User.objects.exclude(
+            friendships_sender__in=Friendship.objects.filter(
+                sender=user
+            )
+        ).exclude(
+            friendships_recipient__in=Friendship.objects.filter(
+                recipient=user
+            )
+        )
+        return non_friends
 
 
 class CheckFriendRequestsView(View):

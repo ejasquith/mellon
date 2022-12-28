@@ -20,7 +20,7 @@
                 <input type="submit" class="btn btn-purple d-block" value="Edit Profile">
             </form>
             {% elif not friendship %}
-            <button id="add-friend-btn" class="btn btn-purple d-block" data-recipient="{{ user.id }}">Send friend request</button>
+            <button id="add-friend-btn" class="btn btn-purple d-block" data-recipient="{{ user.id }}">Add Friend</button>
             {% elif friendship.status == 0 %}
                 {% if friendship.sender == request.user %}
                     <button class="btn d-block" disabled>Friend Request Sent</button>

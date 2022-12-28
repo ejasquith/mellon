@@ -46,7 +46,7 @@
         {% endfor %}
     </div>
     {% else %}
-    <h2 class="section-header">You don't have any friends. Why not <a href="#">find some?</a></h2>
+    <h2 class="section-header">You don't have any friends. Why not <a href="{% url 'find_friends' %}"><u>find some?</u></a></h2>
     {% endif %}
 {% endblock content %}
 
