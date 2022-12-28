@@ -22,7 +22,7 @@
         <button class="btn btn-purple">Send friend request</button>
         {% endif %}
     </div>
-    {% if friendship and friendship.status == 1 %}
+    {% if friendship and friendship.status == 1 or is_current_user %}
         {% for post in user.posts.all %}
             {% include 'post_template.html' %}
         {% endfor %}
