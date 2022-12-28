@@ -62,3 +62,34 @@ class AddFriendView(View):
                 'message': 'Friend request sent.'
             }
         })
+
+
+class FriendsListView(View):
+    def get(self, request):
+        # Get the list of friends for the current user
+        friendships = Friendship.objects.filter(
+            Q(sender=request.user, status=Friendship.Status.ACCEPTED) |
+            Q(recipient=request.user, status=Friendship.Status.ACCEPTED)
+        ).values_list('sender', 'recipient')
+        # Flatten the list of friends
+        friends = [friend[0] for friend in friendships] + [friend[1] for friend in friendships]
+        # Exclude the current user from the list of friends
+        friends = [friend for friend in friends if friend != request.user.pk]
+        # Filter the User objects to include only the current user's friends
+        friends = User.objects.filter(pk__in=friends)
+
+        # Get the list of users who have sent friend requests
+        pending_requests = Friendship.objects.filter(
+            recipient=request.user,
+            status=Friendship.Status.PENDING
+        ).values_list('sender', flat=True)
+        pending_users = User.objects.filter(pk__in=pending_requests)
+
+        return render(
+            request,
+            'friends_list.html',
+            {
+                'pending_users': pending_users,
+                'friends': friends
+            }
+        )

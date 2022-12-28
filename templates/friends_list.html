@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Incoming friend requests:</h2>
+    {% for pending_user in pending_users %}
+        {{ pending_user.username }}
+    {% endfor %}
+
+    <h2>Friends:</h2>
+    {% for friend in friends %}
+        {{ friend.username }}
+    {% endfor %}
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}
