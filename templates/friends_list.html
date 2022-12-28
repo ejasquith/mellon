@@ -70,7 +70,7 @@
                     let btnSpan = $('.friend-display[data-user-id=' + senderId + ']').find('.btns');
                     btnSpan.empty();
                     btnSpan.append('<button class="btn" disabled>Accepted</button>');
-                    checkFriendRequests()
+                    checkFriendRequests();
                 },
                 error: function (data) {
                     displayMessage(data.msg);

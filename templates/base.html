@@ -43,6 +43,9 @@
                             <a class="nav-link" href="{% url 'profile' slug=request.user.slug %}">Profile</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{% url 'find_friends' %}">Find Friends</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                         </li>
                         {% else %}
@@ -165,6 +168,7 @@
         });
 
         function displayMessage(msg) {
+            console.log('message');
             $('.messages').append(`
             <div class="alert ${msg.tag} alert-dismissible fade show" id="msg" role="alert">
                 ${msg.message}
