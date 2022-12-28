@@ -86,6 +86,30 @@
                 }
             });
         });
+
+        // Handle remove button
+        $('.remove-btn').click(function (event) {
+            const userId = $(this).closest('.friend-display').attr('data-user-id');
+            // Send ajax request
+            $.ajax({
+                url: '{% url "remove_friend" %}',
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                data: {
+                    'user_id': userId,
+                },
+                success: function (data) {
+                    let btnSpan = $('.friend-display[data-user-id=' + userId + ']').find('.btns');
+                    btnSpan.empty();
+                    btnSpan.append('<button class="btn" disabled>Removed</button>');
+                },
+                error: function (data) {
+                    displayMessage(data.msg);
+                }
+            });
+        });
     });
 </script>
 {% endblock script %}

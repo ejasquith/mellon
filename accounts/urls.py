@@ -8,5 +8,6 @@ urlpatterns = [
     path('add_friend', AddFriendView.as_view(), name='add_friend'),
     path('friends', FriendsListView.as_view(), name='friends_list'),
     path('accept_friend_request', AcceptFriendshipView.as_view(), name='accept_friend_request'),
-    path('reject_friend_request', RejectFriendshipView.as_view(), name='reject_friend_request')
+    path('reject_friend_request', RejectFriendshipView.as_view(), name='reject_friend_request'),
+    path('remove_friend', RemoveFriendView.as_view(), name='remove_friend')
 ]
