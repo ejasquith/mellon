@@ -4,6 +4,8 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views import View
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
+
 from .models import CustomUser as User, Friendship
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
@@ -42,3 +44,21 @@ class EditProfileView(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('profile', kwargs={'slug': self.object.slug})
+
+
+class AddFriendView(View):
+    def post(self, request):
+        data = request.POST
+        recipient = get_object_or_404(User, id=data.get('recipient_id'))
+        Friendship.objects.create(
+            sender=request.user,
+            recipient=recipient,
+            status=Friendship.Status.PENDING
+        )
+        return JsonResponse({
+            'status': 'success',
+            'msg': {
+                'tag': 'alert-success',
+                'message': 'Friend request sent.'
+            }
+        })

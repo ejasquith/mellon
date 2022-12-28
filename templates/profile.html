@@ -19,7 +19,7 @@
             <input type="submit" class="btn btn-purple edit-profile-btn" value="Edit Profile">
         </form>
         {% elif not friendship %}
-        <button class="btn btn-purple">Send friend request</button>
+        <button id="add-friend-btn" class="btn btn-purple" data-recipient="{{ user.id }}">Send friend request</button>
         {% endif %}
     </div>
     {% if friendship and friendship.status == 1 or is_current_user %}
@@ -33,4 +33,30 @@
 
 {% block script %}
 {% include 'posts_comments_js.html' %}
+<script>
+    $(document).ready(function () {
+        $('#add-friend-btn').click(function (event) {
+            // Send ajax request
+            $.ajax({
+                url: '{% url "add_friend" %}',
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                data: {
+                    'recipient_id': $('#add-friend-btn').attr('data-recipient'),
+                },
+                success: function (data) {
+                    // Change add friend button
+                    $('#add-friend-btn').attr('disabled','');
+                    $('#add-friend-btn').text('Friend Request Sent');
+                    displayMessage(data.msg);
+                },
+                error: function (data) {
+                    displayMessage(data.msg);
+                }
+            });
+        });
+    });
+</script>
 {% endblock script %}
