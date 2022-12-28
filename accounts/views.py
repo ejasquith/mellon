@@ -93,6 +93,20 @@ class RejectFriendshipView(View):
         })
 
 
+class CancelFriendshipView(View):
+    def post(self, request):
+        data = request.POST
+        recipient = User.objects.get(pk=request.POST.get('recipient_id'))
+        Friendship.objects.filter(recipient=recipient, sender=request.user).delete()
+        return JsonResponse({
+            'status': 'success',
+            'msg': {
+                'tag': 'alert-success',
+                'message': 'Friend request canceled.'
+            }
+        })
+
+
 class RemoveFriendView(View):
     def post(self, request):
         data = request.POST
@@ -132,11 +146,19 @@ class FriendsListView(View):
         ).values_list('sender', flat=True)
         pending_users = User.objects.filter(pk__in=pending_requests)
 
+        # Get the list of users who have been sent friend requests
+        outgoing_requests = Friendship.objects.filter(
+            sender=request.user,
+            status=Friendship.Status.PENDING
+        ).values_list('recipient', flat=True)
+        outgoing_users = User.objects.filter(pk__in=outgoing_requests)
+
         return render(
             request,
             'friends_list.html',
             {
                 'pending_users': pending_users,
+                'outgoing_users': outgoing_users,
                 'friends': friends
             }
         )

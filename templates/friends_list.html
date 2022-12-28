@@ -24,6 +24,28 @@
         {% endfor %}
     </div>
     {% endif %}
+    {% if outgoing_users.all %}
+    <div class="friend-requests">
+        <h2 class="section-header">Outgoing friend requests:</h2>
+        {% for outgoing_user in outgoing_users %}
+        <div class="row">
+            <div class="friend-display card col-md-6 offset-md-3 mb-4" data-user-id="{{ outgoing_user.id }}">
+                <div class="card-body">
+                    <a href="{% url 'profile' outgoing_user.slug %}">
+                        <span class="user-info">
+                            <img class="pfp pfp-s d-inline" src="{{ outgoing_user.profile_picture.url }}">
+                            <p class="d-inline">{{ outgoing_user.display_name }} <span class="text-secondary">({{ outgoing_user.username }})</span></p>
+                        </span>
+                    </a>
+                    <span class="floatright btns">
+                        <button class="btn btn-danger cancel-btn">Cancel</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
     {% if friends.all %}
     <div class="friends">
         <h2 class="section-header">Friends:</h2>
@@ -96,6 +118,30 @@
                     btnSpan.empty();
                     btnSpan.append('<button class="btn" disabled>Rejected</button>');
                     checkFriendRequests()
+                },
+                error: function (data) {
+                    displayMessage(data.msg);
+                }
+            });
+        });
+
+        // Handle cancel button
+        $('.cancel-btn').click(function (event) {
+            const recipientId = $(this).closest('.friend-display').attr('data-user-id');
+            // Send ajax request
+            $.ajax({
+                url: '{% url "cancel_friend_request" %}',
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                data: {
+                    'recipient_id': recipientId,
+                },
+                success: function (data) {
+                    let btnSpan = $('.friend-display[data-user-id=' + recipientId + ']').find('.btns');
+                    btnSpan.empty();
+                    btnSpan.append('<button class="btn" disabled>Canceled</button>');
                 },
                 error: function (data) {
                     displayMessage(data.msg);
