@@ -8,8 +8,12 @@
         <div class="row">
             <div class="friend-display card col-md-6 offset-md-3" data-user-id="{{ pending_user.id }}">
                 <div class="card-body">
-                    <img class="pfp pfp-s d-inline" src="{{ pending_user.profile_picture.url }}">
-                    <p class="d-inline">{{ pending_user.display_name }} <span class="text-secondary">({{ pending_user.username }})</span></p>
+                    <a href="{% url 'profile' pending_user.slug %}">
+                        <span class="user-info">
+                            <img class="pfp pfp-s d-inline" src="{{ pending_user.profile_picture.url }}">
+                            <p class="d-inline">{{ pending_user.display_name }} <span class="text-secondary">({{ pending_user.username }})</span></p>
+                        </span>
+                    </a>
                     <span class="floatright btns">
                         <button class="btn btn-purple accept-btn">Accept</button>
                         <button class="btn btn-danger reject-btn">Reject</button>
@@ -27,8 +31,12 @@
         <div class="row">
             <div class="friend-display card col-md-6 offset-md-3 mb-4" data-user-id="{{ friend.id }}">
                 <div class="card-body">
-                    <img class="pfp pfp-s d-inline" src="{{ friend.profile_picture.url }}">
-                    <p class="d-inline">{{ friend.display_name }} <span class="text-secondary">({{ friend.username }})</span></p>
+                    <a href="{% url 'profile' friend.slug %}">
+                        <span class="user-info">
+                            <img class="pfp pfp-s d-inline" src="{{ friend.profile_picture.url }}">
+                            <p class="d-inline">{{ friend.display_name }} <span class="text-secondary">({{ friend.username }})</span></p>
+                        </span>
+                    </a>
                     <span class="floatright btns">
                         <button class="btn btn-danger remove-btn">Remove Friend</button>
                     </span>
