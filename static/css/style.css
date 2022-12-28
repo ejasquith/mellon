@@ -26,7 +26,7 @@ a {
     align-items: center;
     font-size: 2rem;
     position: fixed;
-    bottom: 150px;
+    bottom: 100px;
     right:25px;
 }
 #create-post-btn p {
