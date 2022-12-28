@@ -5,13 +5,13 @@
         <h2 class="section-header">Incoming friend requests:</h2>
         {% for pending_user in pending_users %}
         <div class="row">
-            <div class="friend-display card col-md-6 offset-md-3">
+            <div class="friend-display card col-md-6 offset-md-3" data-user-id="{{ pending_user.id }}">
                 <div class="card-body">
                     <img class="pfp pfp-s d-inline" src="{{ pending_user.profile_picture.url }}">
                     <p class="d-inline">{{ pending_user.display_name }} <span class="text-secondary">({{ pending_user.username }})</span></p>
-                    <span class="floatright">
-                        <button class="btn btn-purple">Accept</button>
-                        <button class="btn btn-danger">Reject</button>
+                    <span class="floatright btns">
+                        <button class="btn btn-purple accept-btn">Accept</button>
+                        <button class="btn btn-danger reject-btn">Reject</button>
                     </span>
                 </div>
             </div>
@@ -22,12 +22,12 @@
         <h2 class="section-header">Friends:</h2>
         {% for friend in friends %}
         <div class="row">
-            <div class="friend-display card col-md-6 offset-md-3">
+            <div class="friend-display card col-md-6 offset-md-3" data-user-id="{{ friend.id }}">
                 <div class="card-body">
                     <img class="pfp pfp-s d-inline" src="{{ friend.profile_picture.url }}">
                     <p class="d-inline">{{ friend.display_name }} <span class="text-secondary">({{ friend.username }})</span></p>
-                    <span class="floatright">
-                        <button class="btn btn-danger">Remove Friend</button>
+                    <span class="floatright btns">
+                        <button class="btn btn-danger remove-btn">Remove Friend</button>
                     </span>
                 </div>
             </div>
@@ -37,4 +37,31 @@
 {% endblock content %}
 
 {% block script %}
+<script>
+    $(document).ready(function () {
+        // Handle accept friendship button
+        $('.accept-btn').click(function (event) {
+            const senderId = $(this).closest('.friend-display').attr('data-user-id');
+            // Send ajax request
+            $.ajax({
+                url: '{% url "accept_friend_request" %}',
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                data: {
+                    'sender_id': senderId,
+                },
+                success: function (data) {
+                    let btnSpan = $('.friend-display[data-user-id=' + senderId + ']').find('.btns');
+                    btnSpan.empty();
+                    btnSpan.append('<button class="btn" disabled>Accepted</button>');
+                },
+                error: function (data) {
+                    displayMessage(data.msg);
+                }
+            });
+        });
+    });
+</script>
 {% endblock script %}

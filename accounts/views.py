@@ -64,6 +64,20 @@ class AddFriendView(View):
         })
 
 
+class AcceptFriendshipView(View):
+    def post(self, request):
+        data = request.POST
+        sender = User.objects.get(pk=request.POST.get('sender_id'))
+        Friendship.objects.filter(recipient=request.user, sender=sender).update(status=Friendship.Status.ACCEPTED)
+        return JsonResponse({
+            'status': 'success',
+            'msg': {
+                'tag': 'alert-success',
+                'message': 'Friend request accepted.'
+            }
+        })
+
+
 class FriendsListView(View):
     def get(self, request):
         # Get the list of friends for the current user
