@@ -35,3 +35,13 @@ class Comment(models.Model):
     def __str__(self):
         return f"{self.author} commented: {self.body}"
 
+
+class Friendship(models.Model):
+
+    class Status(models.IntegerChoices):
+        PENDING = 0
+        ACCEPTED = 1
+    
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="friendships_sender")
+    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name="friendships_recipient")
+    status = models.IntegerField(choices=Status.choices)
