@@ -39,7 +39,7 @@
                         <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'friends_list' %}">Friends <span class="notification"><i class="fa-solid fa-circle-exclamation"></i></span></a>
+                        <a class="nav-link" href="{% url 'friends_list' %}">Friends <span class="notification d-none"><i class="fa-solid fa-circle-exclamation"></i></span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Messages</a>
@@ -188,9 +188,11 @@
                 success: function(response) {
                     // If there are friend requests, show notification
                     if (response.has_requests) {
-                        $('.notification').show();
+                        $('.notification').addClass('d-inline');
+                        $('.notification').removeClass('d-none');
                     } else {
-                        $('.notification').hide();
+                        $('.notification').addClass('d-none');
+                        $('.notification').removeClass('d-inline');
                     }
                 }
             });
