@@ -28,5 +28,7 @@ class ProfileView(View):
 class EditProfileView(UpdateView):
     model = User
     form_class = CustomUserChangeForm
-    success_url = reverse_lazy('profile')
     template_name = 'edit_profile.html'
+
+    def get_success_url(self):
+        return reverse_lazy('profile', kwargs={'slug': self.object.slug})
