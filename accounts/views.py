@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
 from django.views import View
 from django.db.models import Q
+from django.core.exceptions import ObjectDoesNotExist
 from .models import CustomUser as User, Friendship
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
@@ -17,17 +18,19 @@ class ProfileView(View):
     def get(self, request, slug, *args, **kwargs):
         user = get_object_or_404(User, slug=slug)
 
-        has_friendship = Friendship.objects.filter(
-            Q(sender=request.user, recipient=user) | Q(sender=user, recipient=request.user)
-        ).exists()
-
+        try:
+            friendship = Friendship.objects.get(
+                Q(sender=request.user, recipient=user) | Q(sender=user, recipient=request.user)
+            )
+        except ObjectDoesNotExist:
+            friendship = None
         return render(
             request,
             "profile.html",
             {
                 "user": user,
                 "is_current_user": True if user == request.user else False,
-                "has_friendship": has_friendship
+                'friendship': friendship
             }
         )
 
