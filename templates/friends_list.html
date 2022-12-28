@@ -22,7 +22,7 @@
         <h2 class="section-header">Friends:</h2>
         {% for friend in friends %}
         <div class="row">
-            <div class="friend-display card col-md-6 offset-md-3" data-user-id="{{ friend.id }}">
+            <div class="friend-display card col-md-6 offset-md-3 mb-4" data-user-id="{{ friend.id }}">
                 <div class="card-body">
                     <img class="pfp pfp-s d-inline" src="{{ friend.profile_picture.url }}">
                     <p class="d-inline">{{ friend.display_name }} <span class="text-secondary">({{ friend.username }})</span></p>
