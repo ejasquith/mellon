@@ -7,15 +7,29 @@ from django.utils import timezone
 from django.http import JsonResponse
 
 from .models import Post, Comment
-from accounts.models import CustomUser as User
+from accounts.models import CustomUser as User, Friendship
 
 
 class PostList(generic.ListView):
     model = Post
-    # Gets the most recent post from each user ordered
-    # by user - will be ordered by date in template
-    queryset = Post.objects.order_by('author', '-created_on').distinct('author')
     template_name = 'home.html'
+    
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            # Gets the most recent post from each user ordered
+            # by user - will be ordered by date in template
+            queryset = Post.objects.order_by('author', '-created_on').distinct('author')
+            # Gets list of friendships for current user
+            active_friendships = Friendship.objects.filter(
+                Q(sender=self.request.user, status=Friendship.Status.ACCEPTED) |
+                Q(recipient=self.request.user, status=Friendship.Status.ACCEPTED)
+            ).values_list('sender', 'recipient')
+            # Flattens list
+            friends = [friend[0] for friend in active_friendships] + [friend[1] for friend in active_friendships]
+            # Exclude current user
+            friends = [friend for friend in friends if friend != self.request.user.pk]
+            # Filter queryset to only include friends
+            return queryset.filter(author__in=friends)
 
 
 class CreatePost(View):
