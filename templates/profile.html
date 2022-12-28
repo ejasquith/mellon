@@ -18,8 +18,9 @@
         <form action="{% url 'edit_profile' slug=user.slug %}">
             <input type="submit" class="btn btn-purple edit-profile-btn" value="Edit Profile">
         </form>
+        {% elif not has_friendship %}
+        <button class="btn btn-purple">Send friend request</button>
         {% endif %}
-        <!--else if friend btn-->
     </div>
     {% for post in user.posts.all %}
         {% include 'post_template.html' %}
