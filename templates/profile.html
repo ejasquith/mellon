@@ -20,6 +20,8 @@
         </form>
         {% elif not friendship %}
         <button id="add-friend-btn" class="btn btn-purple" data-recipient="{{ user.id }}">Send friend request</button>
+        {% elif friendship.status == 0 %}
+        <button class="btn" disabled>Friend Request Sent</button>
         {% endif %}
     </div>
     {% if friendship and friendship.status == 1 or is_current_user %}
