@@ -2,9 +2,10 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserChangeForm
-from .models import CustomUser
+from .models import CustomUser, Friendship
 
 
+@admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     form = CustomUserChangeForm
 
@@ -16,4 +17,7 @@ class CustomUserAdmin(UserAdmin):
     model = CustomUser
     list_display = ["username", "email",]
 
-admin.site.register(CustomUser, CustomUserAdmin)
+
+@admin.register(Friendship)
+class FriendshipAdmin(admin.ModelAdmin):
+    list_display = ('sender', 'recipient', 'status')
