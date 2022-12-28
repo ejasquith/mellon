@@ -17,3 +17,10 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ("username", "password1", "password2")
+
+    # def clean(self):
+    #     cleaned_data = super(CustomUserCreationForm, self).clean()
+    #     username = cleaned_data.get('username')
+    #     if ('@', '.', '-', '+') in username:
+    #         self.add_error('username', 'Symbols @/./-/+ are not allowed in username.')
+    #     return cleaned_data
