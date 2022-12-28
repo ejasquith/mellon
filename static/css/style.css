@@ -55,8 +55,8 @@ a {
     border: 1px solid lightgrey;
 }
 
-.welcome-text {
-    margin: 0 auto;
+.info-text {
+    margin: 100px auto;
     text-align: center;
 }
 

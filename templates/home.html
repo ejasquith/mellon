@@ -8,14 +8,14 @@
             {% for post in post_list|dictsortreversed:"created_on" %}
                 {% include 'post_template.html' %}
             {% empty %}
-                <div class="welcome-text">
+                <div class="info-text">
                     <h2>Welcome to Mellon!</h2>
                     <p>Normally, we'd show off all your friends' posts here, but you don't have any :(</p>
                     <p><a href="{% url 'find_friends' %}"><u>Why not find some?<u></a></p>
                 </div>
             {% endfor %}
         {% else %}
-                <div class="welcome-text">
+                <div class="info-text">
                     <h2>Welcome to Mellon!</h2>
                     <p>Find your friends, make some new ones, and share your thoughts with the world.</p>
                     <p><a href="{% url 'login' %}"><u>Login</u></a> or <a href="{% url 'signup' %}"><u>Register</u></a></p>
