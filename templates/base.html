@@ -39,7 +39,7 @@
                         <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'friends_list' %}">Friends</a>
+                        <a class="nav-link" href="{% url 'friends_list' %}">Friends <span class="notification"><i class="fa-solid fa-circle-exclamation"></i></span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Messages</a>
@@ -117,6 +117,10 @@
 
     <script>
         $(document).ready(function () {
+            // Check for friend requests every 60 seconds
+            checkFriendRequests()
+            setInterval(checkFriendRequests, 60000);
+
             // Update copyright year
             $('#copyright').append(document.createTextNode(new Date().getFullYear()))
 
@@ -171,6 +175,25 @@
             .replace(/</g, "&lt;" ) .replace( />/g, "&gt;")
             .replace(/"/g, "&quot;")
             .replace(/'/g, "&#39;");
+        }
+
+        function checkFriendRequests() {
+            // Send ajax request to check for incoming friend requests
+            $.ajax({
+                url: '{% url "check_friend_requests" %}',
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    // If there are friend requests, show notification
+                    if (response.has_requests) {
+                        $('.notification').show();
+                    } else {
+                        $('.notification').hide();
+                    }
+                }
+            });
         }
 
         

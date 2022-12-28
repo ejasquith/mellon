@@ -139,3 +139,13 @@ class FriendsListView(View):
                 'friends': friends
             }
         )
+
+
+class CheckFriendRequestsView(View):
+    def post(self, request):
+        if request.user.is_authenticated:
+            has_requests = Friendship.objects.filter(
+                recipient=request.user, status=Friendship.Status.PENDING
+            ).exists()
+            return JsonResponse({'has_requests': has_requests})
+        return JsonResponse({'error': 'User not authenticated'})
