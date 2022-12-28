@@ -114,3 +114,7 @@ a {
     padding-left: 10px;
     border-left: 1px solid lightgrey;
 }
+
+.section-header {
+    padding: 0 0 20px 20px;
+}
