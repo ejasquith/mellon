@@ -78,6 +78,20 @@ class AcceptFriendshipView(View):
         })
 
 
+class RejectFriendshipView(View):
+    def post(self, request):
+        data = request.POST
+        sender = User.objects.get(pk=request.POST.get('sender_id'))
+        Friendship.objects.filter(recipient=request.user, sender=sender).delete()
+        return JsonResponse({
+            'status': 'success',
+            'msg': {
+                'tag': 'alert-success',
+                'message': 'Friend request rejected.'
+            }
+        })
+
+
 class FriendsListView(View):
     def get(self, request):
         # Get the list of friends for the current user

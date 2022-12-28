@@ -62,6 +62,30 @@
                 }
             });
         });
+
+        // Handle reject button
+        $('.reject-btn').click(function (event) {
+            const senderId = $(this).closest('.friend-display').attr('data-user-id');
+            // Send ajax request
+            $.ajax({
+                url: '{% url "reject_friend_request" %}',
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                data: {
+                    'sender_id': senderId,
+                },
+                success: function (data) {
+                    let btnSpan = $('.friend-display[data-user-id=' + senderId + ']').find('.btns');
+                    btnSpan.empty();
+                    btnSpan.append('<button class="btn" disabled>Rejected</button>');
+                },
+                error: function (data) {
+                    displayMessage(data.msg);
+                }
+            });
+        });
     });
 </script>
 {% endblock script %}
