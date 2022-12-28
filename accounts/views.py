@@ -154,13 +154,13 @@ class FindFriendsView(ListView):
         # with the user as either sender or recipient
         non_friends = User.objects.exclude(
             friendships_sender__in=Friendship.objects.filter(
-                sender=user
+                recipient=user
             )
         ).exclude(
             friendships_recipient__in=Friendship.objects.filter(
-                recipient=user
+                sender=user
             )
-        )
+        ).exclude(id=user.id)
         return non_friends
 
 
