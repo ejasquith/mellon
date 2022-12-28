@@ -20,7 +20,7 @@ class ProfileView(View):
             "profile.html",
             {
                 "user": user,
-                "is_current_user": True if user == request.user else False
+                "is_current_user": True if user == request.user else False,
             }
         )
 

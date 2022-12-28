@@ -40,3 +40,14 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+
+class Friendship(models.Model):
+
+    class Status(models.IntegerChoices):
+        PENDING = 0
+        ACCEPTED = 1
+    
+    sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="friendships_sender")
+    recipient = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="friendships_recipient")
+    status = models.IntegerField(choices=Status.choices)
