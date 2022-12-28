@@ -13,20 +13,22 @@
             <div class="bio-container">
                 <p class="text-secondary">{{ user.bio }}</p>
             </div>
-            {% endif %}
-        {% if is_current_user %}
-        <form action="{% url 'edit_profile' slug=user.slug %}">
-            <input type="submit" class="btn btn-purple d-block" value="Edit Profile">
-        </form>
-        {% elif not friendship %}
-        <button id="add-friend-btn" class="btn btn-purple d-block" data-recipient="{{ user.id }}">Send friend request</button>
-        {% elif friendship.status == 0 %}
-            {% if friendship.sender == request.user %}
-                <button class="btn d-block" disabled>Friend Request Sent</button>
-            {% else %}
-                <button id="accept-friend-btn" class="btn btn-purple d-block">Accept Friend Request</button>
-            {% endif %}
         {% endif %}
+        <span class="btns {% if not user.bio %} mt-4 {% endif %}">
+            {% if is_current_user %}
+            <form action="{% url 'edit_profile' slug=user.slug %}">
+                <input type="submit" class="btn btn-purple d-block" value="Edit Profile">
+            </form>
+            {% elif not friendship %}
+            <button id="add-friend-btn" class="btn btn-purple d-block" data-recipient="{{ user.id }}">Send friend request</button>
+            {% elif friendship.status == 0 %}
+                {% if friendship.sender == request.user %}
+                    <button class="btn d-block" disabled>Friend Request Sent</button>
+                {% else %}
+                    <button id="accept-friend-btn" class="btn btn-purple d-block">Accept Friend Request</button>
+                {% endif %}
+            {% endif %}
+        </span>
     </div>
     {% if friendship and friendship.status == 1 or is_current_user %}
         {% for post in user.posts.all %}
