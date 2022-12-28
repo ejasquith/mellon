@@ -37,6 +37,11 @@ a {
     border: 1px solid lightgrey;
 }
 
+.welcome-text {
+    margin: 0 auto;
+    text-align: center;
+}
+
 .post-header, .comment-header {
     display: flex;
     align-items: center;

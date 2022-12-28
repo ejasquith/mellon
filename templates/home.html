@@ -5,11 +5,21 @@
     <div class="row">
         <!--Post Display-->
         {% if user.is_authenticated %}
-        {% for post in post_list|dictsortreversed:"created_on" %}
-            {% include 'post_template.html' %}
-        {% endfor %}
+            {% for post in post_list|dictsortreversed:"created_on" %}
+                {% include 'post_template.html' %}
+            {% empty %}
+                <div class="welcome-text">
+                    <h2>Welcome to Mellon!</h2>
+                    <p>Normally, we'd show off all your friends' posts here, but you don't have any :(</p>
+                    <p><a href="#"><u>Why not find some?<u></a></p>
+                </div>
+            {% endfor %}
         {% else %}
-        <h2>You're not signed up</h2>
+                <div class="welcome-text">
+                    <h2>Welcome to Mellon!</h2>
+                    <p>Find your friends, make some new ones, and share your thoughts with the world.</p>
+                    <p><a href="{% url 'login' %}"><u>Login</u></a> or <a href="{% url 'signup' %}"><u>Register</u></a></p>
+                </div>
         {% endif %}
     </div>
 </div>
