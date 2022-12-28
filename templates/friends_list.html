@@ -6,7 +6,7 @@
         <h2 class="section-header">Incoming friend requests:</h2>
         {% for pending_user in pending_users %}
         <div class="row">
-            <div class="friend-display card col-md-6 offset-md-3" data-user-id="{{ pending_user.id }}">
+            <div class="friend-display card col-md-6 offset-md-3 mb-4" data-user-id="{{ pending_user.id }}">
                 <div class="card-body">
                     <a href="{% url 'profile' pending_user.slug %}">
                         <span class="user-info">
