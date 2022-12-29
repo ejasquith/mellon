@@ -81,6 +81,14 @@ This epic consisted of miscellaneous tasks that did not fit anywhere else and we
 - Create favicon
 - Create custom 404, 403 and 500 pages
 
+## ERD
+
+After planning my user stories and sprints, I created an entity-relationship diagram (ERD) to plan how the database would look. 
+
+![The ERD for this project](docs/erd.png)
+
+Some of the fields aren't properly defined - for example, I included password_hash in the user entity, which is inherited from Django's base User model. I wasn't sure at the point of creating the ERD how this would be implemented, so I included it as a placeholder. Overall, the fields were less important than the entities and the relationships between them, so this was mainly a tool to understand how my models would interact.
+
 ## Wireframes
 
 Before starting development, I created wireframes to help design how pages should look.
