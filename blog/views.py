@@ -159,3 +159,13 @@ def handler500(request, *ars, **argv):
     )
     response.status_code = 500
     return response
+
+
+def handler403(request, *ars, **argv):
+    response = render(
+        request,
+        '403.html',
+        {},
+    )
+    response.status_code = 403
+    return response

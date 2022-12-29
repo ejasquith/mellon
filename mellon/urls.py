@@ -25,3 +25,4 @@ urlpatterns = [
 
 handler404 = 'blog.views.handler404'
 handler500 = 'blog.views.handler500'
+handler403 = 'blog.views.handler403'
