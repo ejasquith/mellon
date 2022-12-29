@@ -96,33 +96,37 @@ Before starting development, I created wireframes to help design how pages shoul
 ### Home Screen (not logged in)
 ![A wireframe for the home screen (not logged in)](docs/wireframes/home-screen-not-logged-in.png)
 
-## Home Screen (logged in)
+### Home Screen (logged in)
 ![A wireframe for the home screen (logged in)](docs/wireframes/home-screen-logged-in.png)]
 
-## Login
+### Login
 ![A wireframe for the login screen](docs/wireframes/login.png)
 
-## Register
+### Register
 ![A wireframe for the register screen](docs/wireframes/register.png)
 
-## Create Post
+### Create Post
 ![A wireframe for the create post form](docs/wireframes/create-post.png)
 
-## Create Comment
+### Create Comment
 ![A wireframe for the comment form](docs/wireframes/comment.png)
 
-## View Comments
+### View Comments
 ![A wireframe for the comment view](docs/wireframes/comments-view.png)
 
-## Profile
+### Profile
 ![A wireframe for the profile page](docs/wireframes/profile-page.png)
 
-## Friends
+### Friends
 ![A wireframe for the friends screen](docs/wireframes/friends.png)
 
-## Messages
+### Messages
 ![A wireframe for the messages screen](docs/wireframes/messages.png)
 
-## Conversation
+### Conversation
 ![A wireframe for the conversation screen](docs/wireframes/conversation.png)
+
+## Design
+
+Most of the project uses built-in Bootstrap designs. I was unable to plan and implement a design scheme for this project due to time constraints. That being said, my original vision for this project was clean & minimal with pops of colour throughout, which my current design does well.
 
