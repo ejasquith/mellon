@@ -244,13 +244,19 @@ Steps: Navigate to profile page and click the like button on the post
 Expected: Like will be added. Button will become solid and like count will increase  
 Outcome: As expected  
 
-## Test 9 - Create and view comments 
+## Test 9 - Unlike post
+
+Steps: Click the like button again  
+Expected: Like will be removed. Button will become an outline again and like count will decrease  
+Outcome: As expected  
+
+## Test 10 - Create and view comments 
 
 Steps: Click on the comment icon on the post. Enter a comment into the form and click post  
 Expected: The comments section will appear. The comment is created and displayed in the comments section  
 Outcome: As expected  
 
-## Test 10 - Edit profile
+## Test 11 - Edit profile
 
 Steps: Navigate to profile page and click edit profile. Enter new details and click submit  
 Expected: The profile will be updated with new information  
