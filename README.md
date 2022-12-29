@@ -185,3 +185,76 @@ As it is difficult to find friends otherwise, there is a 'find friends' page. Cu
 Additionally, a notification is displayed when the user has incoming friend requests. This is checked when the user loads a page and ever 60 seconds thereafter.
 
 ![A screenshot of the friend request notification](docs/screenshots/friends-notification-ss.png)
+
+# Testing
+
+Manual testing was used to ensure this project worked successfully.
+
+## Test 1 - View site without logging in
+
+Steps: Navigate to the home page without logging in  
+Expected: A message displays asking the user to log in or register  
+Outcome: As expected
+
+## Test 2 - Register
+
+Steps: Navigate to the register page and enter a username and password  
+Expected: A user is created with the username and password given  
+Outcome: As expected
+
+## Test 3 - Login
+
+Steps: Navigate to the login page and enter the credentials used previously  
+Expected: The user is logged in and returned to the home page   
+Outcome: As expected
+
+## Test 4 - Send friend request
+
+Steps: Navigate to the find friends page and click send friend request  
+Expected: A pending friend request is created. This appears in the friends page  
+Outcome: As expected  
+
+## Test 5 - Accept friend request
+
+Steps: Log in with the user the request was sent to, navigate to friends, and click accept friend request  
+Expected: The request status becomes accepted. The user appears in home and friends, and posts can be viewed on their profile page  
+Outcome: As expected
+
+## Test 6 - Remove friend
+
+Steps: Navigate to friends page and click remove friend  
+Expected: The friendship is removed. Can no longer see user on home screen or see their posts  
+Outcome: As expected  
+
+## Test 6 - Reject friend request
+
+Steps: Send friend request to test user. Log in with previous credentials. Navigate to friends and cick reject request  
+Expected: The friend request is deleted and no longer appears in friends. Can send a friend request to the user as before  
+Outcome: As expected  
+
+## Test 7 - Create post
+
+Steps: Click on the create post button. Enter a post into the form and click post  
+Expected: A post will be created and can be viewed on the user's profile page  
+Outcome: As expected
+
+## Test 8 - Like post
+
+Steps: Navigate to profile page and click the like button on the post  
+Expected: Like will be added. Button will become solid and like count will increase  
+Outcome: As expected  
+
+## Test 9 - Create and view comments 
+
+Steps: Click on the comment icon on the post. Enter a comment into the form and click post  
+Expected: The comments section will appear. The comment is created and displayed in the comments section  
+Outcome: As expected  
+
+## Test 10 - Edit profile
+
+Steps: Navigate to profile page and click edit profile. Enter new details and click submit  
+Expected: The profile will be updated with new information  
+Outcome: Profile picture is not changed.  
+Error message: `Form contains a file input, but is missing method=POST and enctype=multipart/form-data on the form.  The file will not be sent.`  
+Fix: Add `enctype="multipart/form-data"` to the form  
+Outcome: As expected  
