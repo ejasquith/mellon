@@ -130,3 +130,58 @@ Before starting development, I created wireframes to help design how pages shoul
 
 Most of the project uses built-in Bootstrap designs. I was unable to plan and implement a design scheme for this project due to time constraints. That being said, my original vision for this project was clean & minimal with pops of colour throughout, which my current design does well.
 
+The exception to this is django's default forms (login, register, and edit profile). These are not styled and, while functional, are a jarring break from the otherwise consistent design of the site.  
+This is because, given the little development time I had, the easiest way to implement them was simply putting `{{ form.as_p }}` into the template. With more time, I would investigate how to style these properly.
+
+# Features
+
+The first thing the user sees when opening the site is a welcome message inviting them to login or register.
+
+![A screenshot of the home page for users not logged in](docs/screenshots/home-not-logged-in-ss.png)
+
+The user can log in:
+
+![A screenshot of the login page](docs/screenshots/login-ss.png)
+
+Or register:
+
+![A screenshot of the register page](docs/screenshots/register-ss.png)
+
+When they are logged in, the homepage displays a list of posts. This is each of their friends' most recent post. They can like a post by clicking the heart, which turns solid.
+
+![A screenshot of the home page when logged in](docs/screenshots/home-logged-in-ss.png)
+
+They can also click the comment icon to open the comments on the post as well as a form to submit a comment.
+
+![A screenshot of the comment section of a post](docs/screenshots/comment-ss.png)
+
+The user also sees a button to create a post in the bottom right of the screen. Clicking this opens a modal with a form to creare a post.
+
+![A screenshot of the create post form](docs/screenshots/post-ss.png)
+
+By clicking the user info section of a post, the user is taken to their profile page. If they are friends, the user info (profile picture, username, display name and bio if it exists) is displayed as well as all of that user's posts. If the current user has sent a pending friend request, that information is displayed. If that user has sent a friend request to the current user, there is a button to accept the request. If no friend request has been sent, there is a button to send a request. This page can also be accessed from the friends and find friends pages, hence the options for the two users not being friends.
+
+![A screenshot of a profile where the user is friends](docs/screenshots/friend-ss.png)
+![A screenshot of a profile with a pending request](docs/screenshots/user-fr-sent-ss.png)
+![A screenshot of a profile with an incoming friend request](docs/screenshots/user-fr-received-ss.png)
+![A screenshot of a profile where there is no friendship](docs/screenshots/user-no-fr-ss.png)
+
+The user can also access their own profile page by clicking 'profile' in the navbar. This functions similarly to other profiles, except that there is an edit profile button. They can also delete their own posts by pressing the bin icon.
+
+![A screenshot of the user's profile](docs/screenshots/profile-ss.png)
+
+If the user clicks the edit profile button, they are sent to the edit profile form.
+
+![A screenshot of the edit profile form](docs/screenshots/edit-profile-ss.png)
+
+The friends page displays all incoming, outgoing, and active friendships, with options to accept/reject, cancel, and remove respectively.
+
+![A screenshot of the friends page](docs/screenshots/friends-ss.png)
+
+As it is difficult to find friends otherwise, there is a 'find friends' page. Currently this just displays all users that the current user is not friends with (or has an outgoing/incoming request). With more time, I would implement this to be a 'friends of friends' list. However, with the small scope of the project and because of the ease of use for testing purposes, this works fine for the moment.
+
+![A screenshot of the find friends page](docs/screenshots/find-friends-ss.png)
+
+Additionally, a notification is displayed when the user has incoming friend requests. This is checked when the user loads a page and ever 60 seconds thereafter.
+
+![A screenshot of the friend request notification](docs/screenshots/friends-notification-ss.png)
