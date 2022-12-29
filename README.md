@@ -265,6 +265,27 @@ Error message: `Form contains a file input, but is missing method=POST and encty
 Fix: Add `enctype="multipart/form-data"` to the form  
 Outcome: As expected  
 
+# Deployment
+
+This project was deployed to Heroku. The steps to do so are as follows:
+- Navigate to Heroku and log in
+- Click 'new' in the top right corner
+- Click 'create new app'
+- Enter app name, select region, and click 'create app'
+- Go to settings and click 'reveal config vars'
+- Add the following:
+    - SECRET_KEY: the secret key you created in env.py
+    - DATABASE_URL: the database url copied from elephantsql
+    - CLOUDINARY_URL: your cloudinary api url
+    - PORT: 8000
+- Go to the deploy tab
+- Scroll down to 'connect to GitHub' and connect your account
+- Search for the repo to deploy
+- Scroll down to 'manual deploy' and choose the main branch
+- Click deploy
+
+The live site can be found at [https://mellon.herokuapp.com/](https://mellon.herokuapp.com/)
+
 # Retrospective
 
 Mellon is a functional site that provides a mostly satisfying user experience. There are obvious problems, such as the way some forms are displayed, but this doesn't affect the site's functionality.  
@@ -272,4 +293,4 @@ Mellon is a functional site that provides a mostly satisfying user experience. T
 Given more time, there are a number of ways I would improve the project.  
 I would take the time to plan the project and ensure no features were missed while developing the user stories. I would also create a cohesive design for the site that doesn't look immediately like a cookie cutter Bootstrap site to the trained eye.  
 
-Beyond this, there are a number of planned features that didn't end up in the finished site that I would implement, such as messaging and administration of posts, comments, and users.
+Beyond this, there are a number of planned features that didn't end up in the finished site that I would implement, such as messaging and administration of posts, comments, and users. I would also implement comprehensive automated testing.
