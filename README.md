@@ -264,3 +264,12 @@ Outcome: Profile picture is not changed.
 Error message: `Form contains a file input, but is missing method=POST and enctype=multipart/form-data on the form.  The file will not be sent.`  
 Fix: Add `enctype="multipart/form-data"` to the form  
 Outcome: As expected  
+
+# Retrospective
+
+Mellon is a functional site that provides a mostly satisfying user experience. There are obvious problems, such as the way some forms are displayed, but this doesn't affect the site's functionality.  
+
+Given more time, there are a number of ways I would improve the project.  
+I would take the time to plan the project and ensure no features were missed while developing the user stories. I would also create a cohesive design for the site that doesn't look immediately like a cookie cutter Bootstrap site to the trained eye.  
+
+Beyond this, there are a number of planned features that didn't end up in the finished site that I would implement, such as messaging and administration of posts, comments, and users.
