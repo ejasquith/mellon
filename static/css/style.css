@@ -5,11 +5,11 @@ html, body {
 }
 .wrapper {
     min-height: 100%;
-    margin: 0 auto -85px;
+    margin: 0 auto -100px;
     padding-bottom: 30px;
 }
 .footer, .push {
-    height: 85px;
+    height: 100px;
 }
 
 a {
