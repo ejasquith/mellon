@@ -12,7 +12,7 @@ Mellon is the Elvish word for 'friend' in Tolkien's "The Lord of the Rings" - an
 
 ### A Note
 
-This project was created under massive time constraints due to life events, mental illness, and various other confounding factors. Where this affected the project, it will be noted.
+This project was created under massive time constraints due to work, life events, mental illness, and various other confounding factors. Where this affected the project, it will be noted.
 
 # Planning Stage
 
@@ -80,3 +80,41 @@ Again, this epic was not implemented.
 This epic consisted of miscellaneous tasks that did not fit anywhere else and were not required for any other parts of development.
 - Create favicon
 - Create custom 404, 403 and 500 pages
+
+## Wireframes
+
+Before starting development, I created wireframes to help design how pages should look.
+
+### Home Screen (not logged in)
+![A wireframe for the home screen (not logged in)](docs/wireframes/home-screen-not-logged-in.png)
+
+## Home Screen (logged in)
+![A wireframe for the home screen (logged in)](docs/wireframes/home-screen-logged-in.png)]
+
+## Login
+![A wireframe for the login screen](docs/wireframes/login.png)
+
+## Register
+![A wireframe for the register screen](docs/wireframes/register.png)
+
+## Create Post
+![A wireframe for the create post form](docs/wireframes/create-post.png)
+
+## Create Comment
+![A wireframe for the comment form](docs/wireframes/comment.png)
+
+## View Comments
+![A wireframe for the comment view](docs/wireframes/comments-view.png)
+
+## Profile
+![A wireframe for the profile page](docs/wireframes/profile-page.png)
+
+## Friends
+![A wireframe for the friends screen](docs/wireframes/friends.png)
+
+## Messages
+![A wireframe for the messages screen](docs/wireframes/messages.png)
+
+## Conversation
+![A wireframe for the conversation screen](docs/wireframes/conversation.png)
+
